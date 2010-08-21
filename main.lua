@@ -1,5 +1,6 @@
 require("gamestate")
 require("utils")
+require("soundmanager")
 
 require("intro")
 
