@@ -7,6 +7,7 @@ state.played = {};
 state.bombCue = 3;
 state.explodeCue = 5;
 state.yayCue = 6.6;
+state.menuCue = 10;
 
 function state:enter()
   print("Do shit!")
