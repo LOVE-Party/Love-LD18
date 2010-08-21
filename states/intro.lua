@@ -9,10 +9,6 @@ state.explodeCue = 5;
 state.yayCue = 6.6;
 state.menuCue = 10;
 
-function state:enter()
-  print("Do shit!")
-end
-
 function state:update( dt )
 
 	soundmanager:update(dt);
@@ -33,7 +29,7 @@ function state:update( dt )
 		state.played.yay = true;
 	elseif( state.dt >= state.menuCue ) then
 	
-		--to next state!
+		Gamestate.switch(Gamestate.menu)
 		
 	end
 	
@@ -66,6 +62,6 @@ end
 
 function state:keypressed( key, unicode )
 
-	--if escape pressed, next state!
+	Gamestate.switch(Gamestate.menu)
 	
 end
