@@ -11,10 +11,10 @@ local ts = -1
  - Flash, AAaahh:
  0.1: boom sound
  0.8: start fadeout
- 1.2: next state
+ 1.5: next state
  - Happiness:
  0.2: yaaaayy sounds
- 1.4: fadeout
+ 2.4: fadeout
 --]]
 
 --[[ Colours:
@@ -79,17 +79,36 @@ end, "intro-dr-bomb", "i-bomb")
 
 hook.add("update", function(dt)
   ts = ts + dt
-  if not images.city then
-    images.city = love.graphics.newImage("gfx/city.png")
+  if not images.gaycity then
+    images.gaycity = love.graphics.newImage("gfx/gaycity.png")
   end
-  if ts >= 1.2 then
+  if not sources.yay then
+    sources.yay = love.audio.newSource("sfx/yay.ogg", "static")
+  end
+  if ts >= 1.5 then
     game.state = "i-happiness"
+    ts = 0
   end
 end, "intro-upd-flash", "i-flash")
 
 hook.add("draw", function()
-  love.graphics.draw(images.city, 243, 254)
-  love.graphics.setColor(233, 233, 233, 233-(math.min(0, ts*-0.8)*250))
-  love.graphics.rectangle(0, 0, 800, 600)
+  love.graphics.draw(images.gaycity, 7, 147)
+  love.graphics.setColor(233, 233, 233, math.max(0, 255+((math.min(0, ts*-0.8)*510)/2)))
+  love.graphics.rectangle("fill", 0, 0, 800, 600)
   love.graphics.setColor(255, 255, 255, 255)
 end, "intro-dr-flash", "i-flash")
+
+hook.add("update", function(dt)
+  ts = ts + dt
+  if ts >= 0.2 and not played.yay then
+    love.audio.play(sources.yay)
+    played.yay = true
+  end
+  if ts >= 2.4 then
+    game.state = "menu"
+  end
+end, "intro-upd-happiness", "i-happiness")
+
+hook.add("draw", function()
+  love.graphics.draw(images.gaycity, 7, 147)
+end, "intro-dr-happiness", "i-happiness")
