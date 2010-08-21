@@ -4,8 +4,6 @@ require("soundmanager")
 
 --states requires
 require("states/intro")
-require("states/menu")
-require("states/game")
 
 function love.load()
   love.graphics.setBackgroundColor(50, 50, 50)
@@ -19,5 +17,5 @@ function love.load()
   loadfromdir(sounds, "sfx", "ogg", love.sound.newSoundData)
   
   Gamestate.registerEvents()
-	Gamestate.switch(Gamestate.intro)
+	Gamestate.switch(Gamestate.menu)
 end
