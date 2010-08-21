@@ -2,7 +2,10 @@ require("gamestate")
 require("utils")
 require("soundmanager")
 
-require("intro")
+--states requires
+require("states/intro")
+require("states/menu")
+require("states/game")
 
 function love.load()
   love.graphics.setBackgroundColor(50, 50, 50)
@@ -10,7 +13,7 @@ function love.load()
   love.graphics.setCaption("Fistful of Beef")
   
   images = {}
-  loadfromdir(images, "imgs", "png", love.graphics.newImage)
+  loadfromdir(images, "gfx", "png", love.graphics.newImage)
   
   sounds = {}
   loadfromdir(sounds, "sfx", "ogg", love.sound.newSoundData)
