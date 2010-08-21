@@ -3,7 +3,7 @@ require("utils")
 require("soundmanager")
 
 --states requires
-require("intro")
+require("states/intro")
 
 function love.load()
   love.graphics.setBackgroundColor(50, 50, 50)
