@@ -22,9 +22,9 @@ function love.load()
   loadfromdir(sounds, "sfx", "ogg", love.sound.newSoundData)
   
   Gamestate.registerEvents()
-  if arg[2] and arg[2] == "--no-intro" then
-    Gamestate.switch(Gamestate.game)
-  else
-    Gamestate.switch(Gamestate.intro)
+  local startstate = "intro"
+  if arg[2] then
+    startstate = arg[2]:match("--state=(.+)") or startstate
   end
+  Gamestate.switch(Gamestate[startstate])
 end
