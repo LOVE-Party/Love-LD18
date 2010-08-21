@@ -1,6 +1,8 @@
 require("gamestate")
 require("utils")
+require("soundmanager")
 
+--states requires
 require("intro")
 
 function love.load()
@@ -9,7 +11,7 @@ function love.load()
   love.graphics.setCaption("Fistful of Beef")
   
   images = {}
-  loadfromdir(images, "imgs", "png", love.graphics.newImage)
+  loadfromdir(images, "gfx", "png", love.graphics.newImage)
   
   sounds = {}
   loadfromdir(sounds, "sfx", "ogg", love.sound.newSoundData)
