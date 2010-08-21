@@ -11,6 +11,9 @@ function love.load()
   images = {}
   loadfromdir(images, "imgs", "png", love.graphics.newImage)
   
+  sounds = {}
+  loadfromdir(sounds, "sfx", "ogg", love.sound.newSoundData)
+  
   Gamestate.registerEvents()
 	Gamestate.switch(Gamestate.intro)
 end
