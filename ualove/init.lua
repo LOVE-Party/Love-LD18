@@ -46,13 +46,7 @@ function hook.call(event, ...)
 end
 
 function love.run()
-  if love.graphics then
-    love.graphics.clear()
-  end
   hook.call("initial")
-  if love.graphics then
-    love.graphics.present()
-  end
 
   hook.call("load")
   local dt = 0
