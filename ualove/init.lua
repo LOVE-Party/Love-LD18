@@ -74,7 +74,7 @@ function love.run()
         if e == "q" then
           game.quit = true
         end
-      love.handlers[e](a,b,c)
+        hook.call(e,a,b,c)
       end
     end
 
