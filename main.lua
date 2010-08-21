@@ -4,11 +4,6 @@ require("soundmanager")
 
 --states requires
 require("states/intro")
-require("states/menu")
-require("states/game")
-
---classes requires
-require("player")
 
 function love.load()
   love.graphics.setBackgroundColor(50, 50, 50)
@@ -22,9 +17,5 @@ function love.load()
   loadfromdir(sounds, "sfx", "ogg", love.sound.newSoundData)
   
   Gamestate.registerEvents()
-  if arg[2] and arg[2] == "--no-intro" then
-    Gamestate.switch(Gamestate.game)
-  else
-    Gamestate.switch(Gamestate.intro)
-  end
+	Gamestate.switch(Gamestate.menu)
 end
