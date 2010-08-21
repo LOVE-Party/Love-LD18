@@ -9,7 +9,7 @@ function hook.add(event, func, id, state, debugonly)
 		assert(type(state) == "string", "bad argument #4 to hook.add (string expected, got "..type(func)..")")
 		local oldfunc,s = func,state
 		func = function(...)
-			if _G.game.state == s then
+			if _G.game.state:match(s) then
 				return oldfunc(...)
 			end
 			return true

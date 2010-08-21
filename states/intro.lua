@@ -112,3 +112,8 @@ end, "intro-upd-happiness", "i-happiness")
 hook.add("draw", function()
   love.graphics.draw(images.gaycity, 7, 147)
 end, "intro-dr-happiness", "i-happiness")
+
+hook.add("kp", function()
+  love.audio.stop()
+  game.state = "menu"
+end, "intro-keycheck", "i-.+")
