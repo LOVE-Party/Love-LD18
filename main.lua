@@ -7,6 +7,9 @@ require("states/intro")
 require("states/menu")
 require("states/game")
 
+--classes requires
+require("player")
+
 function love.load()
   love.graphics.setBackgroundColor(50, 50, 50)
   love.graphics.setMode(800, 600, false, true, 0)
@@ -19,5 +22,9 @@ function love.load()
   loadfromdir(sounds, "sfx", "ogg", love.sound.newSoundData)
   
   Gamestate.registerEvents()
-	Gamestate.switch(Gamestate.intro)
+  if arg[2] and arg[2] == "--no-intro" then
+    Gamestate.switch(Gamestate.game)
+  else
+    Gamestate.switch(Gamestate.intro)
+  end
 end
