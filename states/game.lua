@@ -5,7 +5,8 @@ local arena
 local bulls = {}
 
 function state:enter()
-  arena = _G.arena:new(0,0,1024,1024)
+  love.graphics.setBackgroundColor(236,227,200)
+  arena = _G.arena:new(0,0,1408,1408)
   player = _G.player:new(400, 300, arena, bulls)
   for i = 1, 1 do
     table.insert(bulls, bull:new(400, 300, arena))
