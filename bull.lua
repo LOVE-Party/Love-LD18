@@ -13,8 +13,6 @@ function bull:init(x, y, a)
 end
 
 function bull:update(dt)
---  local x, y = love.mouse.getPosition()
---  self.r = math.atan2(y-self.y, x-self.x)+0.5*math.pi
   x = math.random(-1, 1)
   y = math.random(-1, 1)
   r = math.random(-0.1, 0.1)+0.5*math.pi
@@ -23,10 +21,10 @@ function bull:update(dt)
   self.r = self.r + (r*speed*dt)*0.01
   
   --constrain to arena
-  self.x = math.max( self.x, self.arena:left()+38 );
-  self.x = math.min( self.x, self.arena:right()-38 );
-  self.y = math.max( self.y, self.arena:top()+70);
-  self.y = math.min( self.y, self.arena:bottom()-70 );
+  self.x = math.max(self.x, self.arena:left()+38)
+  self.x = math.min(self.x, self.arena:right()-38)
+  self.y = math.max(self.y, self.arena:top()+70)
+  self.y = math.min(self.y, self.arena:bottom()-70)
 end
 
 function bull:draw()
