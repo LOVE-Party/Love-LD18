@@ -31,7 +31,7 @@ end
 
 function arena:draw()
   love.graphics.setColor(236,227,200)
-  love.graphics.rectangle("fill", self.x+126, self.y+126, 520, 260)
+  love.graphics.rectangle("fill", self.x+126, self.y+126, self.width-248, self.height-248)
   love.graphics.setColor(255,255,255)
   --draw top walls
   for i = 128, self.width-256, 256 do

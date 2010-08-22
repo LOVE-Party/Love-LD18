@@ -5,7 +5,7 @@ local bull
 local arena
 
 function state:enter()
-  arena = _G.arena:new(0,0,768,512)
+  arena = _G.arena:new(0,0,1024,1024)
   player = _G.player:new(400, 300, arena)
   bull = _G.bull:new(400, 300, arena)
 end
