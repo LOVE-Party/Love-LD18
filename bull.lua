@@ -19,6 +19,7 @@ function bull:init(x, y, a, p)
   self.caught = false
   self.arena = a
   self.player = p
+  self.hitwall = false
   normalAnim = newAnimation(images.bulls, 76, 167, 0.1, 8)
   normalAnim:play()
   caughtAnim = newAnimation(images.bulls_caught, 76, 167, 0.1, 8)
@@ -31,7 +32,7 @@ function bull:update(dt)
   caughtAnim:update(dt)
   
   if not self.caught then
-    if self.dur <= 0 then
+    if self.dur <= 0 or self.hitwall then
       local x, y, r
       if math.random(1, 7) > 4 then
         x, y = self.arena:center()
@@ -45,6 +46,7 @@ function bull:update(dt)
       self.dirX = math.cos(self.dir)
       self.dirY = math.sin(self.dir)
       self.dur = math.random(3,7)
+      self.hitwall = false
     end
   
     self.x = self.x + self.dirX*speed*dt
@@ -60,11 +62,16 @@ function bull:update(dt)
     self.r = angle+0.5*math.pi
   end
 
+  local x, y = self.x, self.y
   --constrain to arena
   self.x = math.max(self.x, self.arena:left()+38)
   self.x = math.min(self.x, self.arena:right()-38)
   self.y = math.max(self.y, self.arena:top()+70)
   self.y = math.min(self.y, self.arena:bottom()-70)
+  if self.x ~= x or self.y ~= y then
+    --we ran into a wall
+    self.hitwall = true
+  end
 end
 
 function bull:draw()
