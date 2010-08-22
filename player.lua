@@ -2,6 +2,8 @@ require "lib/SECS"
 
 local speed = 125
 local lassospeed = 5
+local ropelength = 300
+local bulls
 
 player = class:new()
 
@@ -18,20 +20,24 @@ local function getkey(k)
   end
 end
 
-function player:init(x, y, a)
+function player:init(x, y, a, b)
   self.x = x or 0
   self.y = y or 0
   self.r = 0
   self.lassor = 0
   self.gripping = false
   self.spinning = false
+  self.gripped = 0
   self.arena = a
+  bulls = b
+  love.graphics.setLineWidth(3)
 end
 
 function player:mousepressed(x, y, button)
   if button == "l" then
     if self.gripping then
       self.gripping = false
+      bulls[self.gripped].caught = false
     else
       self.spinning = true
     end
@@ -42,7 +48,23 @@ function player:mousereleased(x, y, button)
   if button == "l" then
     if self.spinning then
       self.spinning = false
-      self.gripping = true
+      local dist = math.huge
+      local bullid = 0
+      for i, bull in ipairs(bulls) do
+        local angle = math.atan2(bull.y-self.y, bull.x-self.x)+0.5*math.pi
+	if math.abs(angle-self.r) < 0.1 then
+          local bdist = (bull.x-self.x)^2+(bull.y-self.y)^2
+	  if bdist < dist then
+  	    dist = bdist
+	    bullid = i
+	  end
+	end
+      end
+      if dist <= ropelength^2 then
+         self.gripping = true
+	 self.gripped = bullid
+	 bulls[bullid].caught = true
+      end
     end
   end
 end
@@ -75,5 +97,11 @@ function player:draw()
   if self.spinning then
     local x, y = math.cos(self.r)*40, math.sin(self.r)*40
     love.graphics.draw(images.lasso, self.x+x, self.y+y, self.lassor, 1, 1, 12, 12)
+  elseif self.gripping then
+    local bull = bulls[self.gripped]
+    local x, y = math.cos(self.r-0.5*math.pi)*23, math.sin(self.r-0.5*math.pi)*23
+    love.graphics.setColor(104, 89, 67)
+    love.graphics.line(self.x+x, self.y+y, bull.x, bull.y)
+    love.graphics.setColor(255, 255, 255)
   end
 end
