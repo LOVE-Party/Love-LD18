@@ -10,13 +10,10 @@ local spawnlist
 function state:enter()
   bulls = {}
   spawnlist = {}
-  timer = 0
+  timer = 15
   love.graphics.setBackgroundColor(236,227,200)
   arena = _G.arena:new(0,0,1408,1408)
   player = _G.player:new(400, 300, arena, bulls)
-  for i = 1, 1 do
-    table.insert(bulls, bull:new(400, 300, arena))
-  end
   minimap = _G.minimap:new(player, arena, bulls, spawnlist)
 end
 
