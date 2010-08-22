@@ -15,10 +15,10 @@ end
 
 function state:draw()
   love.graphics.draw(images.deadplayer, 400, 300, 0, 1, 1, 42, 85)
-  love.graphics.setColor(0, 0, 0)
+  love.graphics.setColor(30, 30, 30)
   love.graphics.setFont(largefont)
   love.graphics.printf("Splat!", 300, 300, 200, "center")
   love.graphics.setFont(font)
-  love.graphics.printf("Awww, you died, good thing you can just restart then.", 300, 400, 200, "center")
+  love.graphics.printf("Awww, you died. Good thing you can just restart then!", 300, 400, 200, "center")
   love.graphics.setColor(255, 255, 255)
 end
