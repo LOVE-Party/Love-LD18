@@ -11,6 +11,6 @@ function loadfromdir(targettable, path, extension, func)
   end
 end
 
-function BoxBoxCollision()
+function BoxBoxCollision(a, b)
 	return false
 end

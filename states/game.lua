@@ -60,10 +60,14 @@ function state:update(dt)
     bull:update(dt)
   end
   --collisions!
-  local playerhitbox = {player.x-25, player.y-13, 50, 30}
+  local playerhitbox = {player.x-25, player.y-13, 50, 30, player.r}
+  local bullhitbox = {0, 0, 75, 135}
   local removelist = {}
   for i, v in ipairs(bulls) do
-    if not v.caught and BoxBoxCollision(v.x-25, v.y-25, 75, 135, unpack(playerhitbox)) then
+    bullhitbox[1] = v.x-25
+    bullhitbox[2] = v.y-25
+    bullhitbox[5] = v.r
+    if not v.caught and BoxBoxCollision(bullhitbox, playerhitbox) then
       --OH GOD WE COLLIDE!
       health = health - 1
       table.insert(removelist, i)
