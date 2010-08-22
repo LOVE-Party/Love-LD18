@@ -5,7 +5,7 @@ local font
 local largefont
 
 function state:enter()
-  if not font then font = love.graphics.getFont() end
+  if not font then font = love.graphics.newFont("fonts/Chunkfive.otf", 14) end
   if not largefont then largefont = love.graphics.newFont("fonts/Chunkfive.otf", 48) end
 end
 
@@ -19,6 +19,6 @@ function state:draw()
   love.graphics.setFont(largefont)
   love.graphics.printf("Splat!", 300, 300, 200, "center")
   love.graphics.setFont(font)
-  love.graphics.printf("Awww, you died. Good thing you can just restart then!", 300, 400, 200, "center")
+  love.graphics.printf("Awww, you died. Good thing you can just restart then!", 275, 400, 250, "center")
   love.graphics.setColor(255, 255, 255)
 end

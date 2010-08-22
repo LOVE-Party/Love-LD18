@@ -35,9 +35,6 @@ function love.load()
   music = {}
   loadfromdir(music, "music", "ogg", love.audio.newSource)
 
-  font = love.graphics.newFont("fonts/Chunkfive.otf")
-  love.graphics.setFont(font)
-
   Gamestate.registerEvents()
   Gamestate.switch(Gamestate[(arg[2] and arg[2]:match("--state=(.+)") or "intro")])
 end
