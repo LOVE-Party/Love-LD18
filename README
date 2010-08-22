@@ -1,7 +1,12 @@
 Ludum Dare 18 : Enemies as Weapons
 LOVE-party jam submission --  "Fistful of Beef"
 
-LOVE-Party is TheLinx, bartbes, FelipeBudinich, Nevon, Roybie, Textmode
+Contributors to this awesome project (alphabetically sorted):
+- bartbes
+- Nevon
+- Roybie
+- Textmode
+- TheLinx
 
 <bartbes> git rm -r *
 <bartbes> git commit -m "Fixed all bugs"
