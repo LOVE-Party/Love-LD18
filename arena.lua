@@ -3,6 +3,7 @@ require "lib/SECS"
 local gates = {0, 0, 0, 0}
 local gatedirs = {0, 0, 0, 0}
 local gatespeed = 40
+local floorquad
 
 arena = class:new()
 
@@ -11,6 +12,8 @@ function arena:init(x, y, w, h)
   self.height = h or 1024
   self.x = x or 0
   self.y = y or 0
+  floorquad = love.graphics.newQuad(0, 0, self.width+512, self.width+512, images.sandtile:getWidth(), images.sandtile:getHeight())
+  images.sandtile:setWrap("repeat", "repeat")
 end
 
 function arena:opengate(g)
@@ -96,11 +99,7 @@ function arena:draw()
   love.graphics.setColor(255,255,255)
   
   --Draw floor
-  for i = -256, self.width+256, 128 do
-    for n=-256, self.height+256, 128 do
-      love.graphics.draw(images.sandtile, i, n)
-    end
-  end
+  love.graphics.drawq(images.sandtile, floorquad, -256, -256)
   
   --draw top walls
   for i = 128, self.width-256, 256 do
