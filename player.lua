@@ -61,7 +61,7 @@ function player:mousereleased(x, y, button)
 	  end
 	end
       end
-      if dist <= ropelength^2 then
+      if dist <= ropelengthSq then
         soundmanager:play(sounds.yeehaw)
          self.gripping = true
 	 self.gripped = bullid
@@ -84,11 +84,6 @@ function player:update(dt)
     local bull = bulls[self.gripped]
     local angle = math.atan2(self.y-bull.y, self.x-bull.x)-0.5*math.pi
     self.r = angle
-  end
-  
-  --check player-caught bull distance and correct if needed
-  if self.gripping then
-    local bull = bulls[self.gripped]
     local dist = (self.x - bull.x) * (self.x - bull.x) + (self.y - bull.y) * (self.y - bull.y)
     if dist > ropelengthSq then
       local ropeangle = math.atan2(bull.y-self.y, bull.x-self.x)
