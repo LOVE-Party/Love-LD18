@@ -16,6 +16,12 @@ function love.load()
   love.graphics.setBackgroundColor(50, 50, 50)
   love.graphics.setCaption("Fistful of Beef")
   
+  --Set Random Seed
+  math.randomseed(os.time());
+  math.random()
+  math.random()
+  math.random()
+  
   images = {}
   loadfromdir(images, "gfx", "png", love.graphics.newImage)
   

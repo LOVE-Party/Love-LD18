@@ -29,6 +29,12 @@ function arena:bottom()
   return (self.height - 128)
 end
 
+function arena:center()
+  local x = ( self.x + self.width ) / 2
+  local y = ( self.y + self.height ) / 2
+  return x, y
+end
+
 function arena:draw()
   love.graphics.setColor(236,227,200)
   love.graphics.rectangle("fill", self.x+126, self.y+126, self.width-248, self.height-248)

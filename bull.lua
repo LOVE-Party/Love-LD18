@@ -1,24 +1,40 @@
 require "lib/SECS"
 
-local speed = 75
+local speed = 200
 
 bull = class:new()
 
 function bull:init(x, y, a)
   self.x = x or 0
   self.y = y or 0
+  self.dir = math.random() * math.pi
+  self.dirX = math.cos( self.dir )
+  self.dirY = math.sin( self.dir )
+  self.dur = math.random(1,3)
   self.r = 0
   self.caught = false
   self.arena = a
 end
 
 function bull:update(dt)
-  x = math.random(-1, 1)
-  y = math.random(-1, 1)
-  r = math.random(-0.1, 0.1)+0.5*math.pi
-  self.x = self.x + x*speed*dt
-  self.y = self.y + y*speed*dt
-  self.r = self.r + (r*speed*dt)*0.01
+  self.dur = self.dur - dt
+  
+  if( self.dur <= 0 ) then
+    local x,y = self.arena:center()
+    local r = math.atan2(y-self.y, x-self.x)
+    self.dir = r + ( ( math.random() * math.pi ) - ( math.pi * 0.5 ) )
+    self.dirX = math.cos( self.dir )
+    self.dirY = math.sin( self.dir )
+    self.dur = math.random(1,4)
+  end
+  
+  --x = math.random(-1, 1)
+  --y = math.random(-1, 1)
+  --r = math.random(-0.1, 0.1)+0.5*math.pi
+  self.x = self.x + self.dirX*speed*dt
+  self.y = self.y + self.dirY*speed*dt
+  --self.r = self.r + (r*speed*dt)*0.01
+  self.r = self.dir + ( math.pi * 0.5 )
 
   --constrain to arena
   self.x = math.max(self.x, self.arena:left()+38)
