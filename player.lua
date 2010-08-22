@@ -52,7 +52,7 @@ function player:mousereleased(x, y, button)
       local bullid = 0
       for i, bull in ipairs(bulls) do
         local angle = math.atan2(bull.y-self.y, bull.x-self.x)+0.5*math.pi
-	if math.abs(angle-self.r) < 0.1 then
+	if math.abs(angle-self.r) < 0.15 then
           local bdist = (bull.x-self.x)^2+(bull.y-self.y)^2
 	  if bdist < dist then
   	    dist = bdist
