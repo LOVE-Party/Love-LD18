@@ -6,11 +6,11 @@ player = class:new()
 
 local function getkey(k)
   local lk = love.keyboard
-  if k == 'up'    then 
+  if k == 'up' then 
     return lk.isDown("w") or lk.isDown("up") 
-  elseif k == 'down'  then 
+  elseif k == 'down' then 
     return lk.isDown("s") or lk.isDown("down")
-  elseif k == 'left'  then 
+  elseif k == 'left' then 
     return lk.isDown("a") or lk.isDown("left")
   elseif k == 'right' then 
     return lk.isDown("d") or lk.isDown("right")
@@ -28,7 +28,7 @@ end
 
 function player:update(dt)
   local x, y = love.mouse.getPosition()
-  self.r = math.atan2(y-self.y, x-self.x)+0.5*math.pi
+  self.r = math.atan2(y-300, x-400)+0.5*math.pi
   x = (getkey("right") and 1 or 0) - (getkey("left") and 1 or 0)
   y = (getkey("down") and 1 or 0) - (getkey("up") and 1 or 0)
   self.x = self.x + x*speed*dt
@@ -39,6 +39,10 @@ function player:update(dt)
   self.x = math.min(self.x, self.arena:right()-25)
   self.y = math.max(self.y, self.arena:top()+25)
   self.y = math.min(self.y, self.arena:bottom()-25)
+end
+
+function player:center()
+  love.graphics.translate(400-self.x, 300-self.y)
 end
 
 function player:draw()

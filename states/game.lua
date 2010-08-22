@@ -16,6 +16,7 @@ function state:update(dt)
 end
 
 function state:draw()
+  player:center()
   arena:draw()
   bull:draw()
   player:draw()
