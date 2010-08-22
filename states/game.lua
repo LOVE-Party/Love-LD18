@@ -39,7 +39,7 @@ function state:update(dt)
     elseif gate == 3 then x = arena:right()
     elseif gate == 4 then y = arena:bottom()
     end
-    table.insert(spawnlist, {bull = bull:new(x, y, arena), gate = gate})
+    table.insert(spawnlist, {bull = bull:new(x, y, arena, player), gate = gate})
     arena:opengate(gate)
     timer = 0
   end
