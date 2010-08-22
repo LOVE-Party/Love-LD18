@@ -1,6 +1,6 @@
-require("gamestate")
+require("lib/gamestate")
 require("utils")
-require("soundmanager")
+require("lib/soundmanager")
 
 --states requires
 require("states/intro")

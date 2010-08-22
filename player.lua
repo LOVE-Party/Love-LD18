@@ -1,4 +1,4 @@
-require "SECS"
+require "lib/SECS"
 
 local speed = 125
 
