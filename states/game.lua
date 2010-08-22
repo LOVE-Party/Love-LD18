@@ -17,7 +17,7 @@ function state:enter()
   arena = _G.arena:new(0,0,1408,1408)
   player = _G.player:new(400, 300, arena, bulls)
   minimap = _G.minimap:new(player, arena, bulls, spawnlist)
-  soundmanager:playMusic(music.vestapol, music.struttin_rag)
+  soundmanager:playMusic(music.vestapol)
 end
 
 function state:mousepressed(x, y, button)
@@ -100,5 +100,7 @@ end
 function state:keypressed(key, unicode)
   if key == "rctrl" then
     debug.debug()
+  elseif key == "escape" then
+    Gamestate.switch(Gamestate.menu)
   end
 end
