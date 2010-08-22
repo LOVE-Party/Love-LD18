@@ -76,6 +76,9 @@ function state:update(dt)
   for i, v in ipairs(removelist) do
     table.remove(bulls, v-i+1)
   end
+  if health <= 0 then
+    Gamestate.switch(Gamestate.lost)
+  end
 end
 
 function state:draw()

@@ -6,6 +6,7 @@ require("lib/soundmanager")
 require("states/intro")
 require("states/menu")
 require("states/game")
+require("states/lost")
 
 --classes requires
 require("player")
