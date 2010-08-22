@@ -55,12 +55,12 @@ function bull:update(dt)
   else
     self.dur = 1
     local p = self.caught
-    local angle = math.atan2(p.y-self.y, p.x-self.x)+0.5*math.pi
-    local x, y = math.cos(angle), math.sin(angle)
+    self.dir = math.atan2(p.y-self.y, p.x-self.x)+0.5*math.pi
+    self.dirX, self.dirY = math.cos(self.dir), math.sin(self.dir)
 
-    self.x = self.x + x*capturedspeed*dt
-    self.y = self.y + y*capturedspeed*dt
-    self.r = angle+0.5*math.pi
+    self.x = self.x + self.dirX*capturedspeed*dt
+    self.y = self.y + self.dirY*capturedspeed*dt
+    self.r = self.dir+0.5*math.pi
   end
 
   local x, y = self.x, self.y
