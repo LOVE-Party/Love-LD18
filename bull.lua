@@ -20,16 +20,30 @@ function bull:init(x, y, a, p)
   self.arena = a
   self.player = p
   self.hitwall = false
-  normalAnim = newAnimation(images.bulls, 76, 167, 0.1, 8)
-  normalAnim:play()
-  caughtAnim = newAnimation(images.bulls_caught, 76, 167, 0.1, 8)
-  caughtAnim:play()
+  if not normalAnim then
+    normalAnim = newAnimation(images.bulls, 76, 167, 0.1, 8)
+    normalAnim:play()
+  end
+  if not caughtAnim then
+    caughtAnim = newAnimation(images.bulls_caught, 76, 167, 0.1, 8)
+    caughtAnim:play()
+  end
+  self.dustParticles = love.graphics.newParticleSystem(images.dust, 15)
+  self.dustParticles:setSpeed(2, 7)
+  self.dustParticles:setPosition(self.x, self.y)
+  self.dustParticles:setDirection(self.r+math.pi)
+  self.dustParticles:setLifetime(-1)
+  self.dustParticles:setEmissionRate(6)
+  self.dustParticles:setParticleLife(0.75)
+  self.dustParticles:setSpin(0.1, 1.0, 1)
+  self.dustParticles:start()
 end
 
 function bull:update(dt)
   self.dur = self.dur - dt
   normalAnim:update(dt)
   caughtAnim:update(dt)
+  self.dustParticles:update(dt)
   
   if not self.caught then
     if self.dur <= 0 or self.hitwall then
@@ -69,6 +83,8 @@ function bull:update(dt)
   self.x = math.min(self.x, self.arena:right()-38)
   self.y = math.max(self.y, self.arena:top()+70)
   self.y = math.min(self.y, self.arena:bottom()-70)
+  self.dustParticles:setPosition(self.x, self.y)
+  self.dustParticles:setDirection(self.r+math.pi)
   if self.x ~= x or self.y ~= y then
     --we ran into a wall
     self.hitwall = true
@@ -83,5 +99,6 @@ end
 function bull:draw()
   local anim = normalAnim
   if self.caught then anim = caughtAnim end
+  love.graphics.draw(self.dustParticles, 0, 0)
   anim:draw(self.x, self.y, self.r, 1, 1, 25, 25)
 end
