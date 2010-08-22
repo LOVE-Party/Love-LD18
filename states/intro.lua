@@ -52,3 +52,7 @@ end
 function state:mousepressed(x, y, button)
   Gamestate.switch(Gamestate.menu)
 end
+
+function state:leave()
+  love.audio.stop()
+end
