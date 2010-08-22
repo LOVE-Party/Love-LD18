@@ -30,25 +30,52 @@ function arena:bottom()
 end
 
 function arena:draw()
-  love.graphics.setColor(236,227,200)
-  love.graphics.rectangle("fill", self.x+126, self.y+126, self.width-248, self.height-248)
   love.graphics.setColor(255,255,255)
+  
   --draw top walls
   for i = 128, self.width-256, 256 do
-    love.graphics.draw(images.walltiles.top, i, self.y+30)
+    if i < 640 then
+      love.graphics.draw(images.walltiles.top, i, self.y+30)
+    elseif i == 640 then
+      love.graphics.draw(images.walltiles.gate, i, self.y+110, math.rad(-90))
+    else
+      love.graphics.draw(images.walltiles.top, i-128, self.y+30)
+    end
   end
+  
   --draw left walls
   for i = 128, self.height-256, 256 do
-    love.graphics.draw(images.walltiles.left, self.x+30, i)
+    if i < 640 then
+      love.graphics.draw(images.walltiles.left, self.x+30, i)
+    elseif i == 640 then
+      love.graphics.draw(images.walltiles.gate, self.x+60, i)
+    else
+      love.graphics.draw(images.walltiles.left, self.x+30, i-128)
+    end
   end
+  
   --draw right walls
   for i = 128, self.height-256, 256 do
-    love.graphics.draw(images.walltiles.right, self.x+self.width-154, i)
+    if i < 640 then
+      love.graphics.draw(images.walltiles.right, self.x+self.width-154, i)
+    elseif i == 640 then
+      love.graphics.draw(images.walltiles.gate, self.x+self.width-114, i)
+    else
+      love.graphics.draw(images.walltiles.right, self.x+self.width-154, i-128)
+    end
   end
+  
   --draw bottom walls
   for i = 128, self.width-256, 256 do
-    love.graphics.draw(images.walltiles.bottom, i, self.y+self.height-154)
+    if i < 640 then
+      love.graphics.draw(images.walltiles.bottom, i, self.y+self.height-154)
+    elseif i == 640 then
+      love.graphics.draw(images.walltiles.gate, i+128, self.y+self.height-110, math.rad(90))
+    else
+      love.graphics.draw(images.walltiles.bottom, i-128, self.y+self.height-154)
+    end
   end
+  
   --draw corners
   love.graphics.draw(images.walltiles.topleft, self.x+30, self.y+30)
   love.graphics.draw(images.walltiles.topright, self.width-128, self.y+30)
