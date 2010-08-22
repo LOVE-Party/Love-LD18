@@ -2,7 +2,7 @@ require "lib/SECS"
 
 local gates = {0, 0, 0, 0}
 local gatedirs = {0, 0, 0, 0}
-local gatespeed = 20
+local gatespeed = 40
 
 arena = class:new()
 
