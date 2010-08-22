@@ -6,11 +6,13 @@ local bulls
 local minimap
 local timer
 local spawnlist
+local health
 
 function state:enter()
   bulls = {}
   spawnlist = {}
   timer = 15
+  health = 3
   love.graphics.setBackgroundColor(236,227,200)
   arena = _G.arena:new(0,0,1408,1408)
   player = _G.player:new(400, 300, arena, bulls)
@@ -70,6 +72,9 @@ function state:draw()
   love.graphics.pop()
   --draw hud
   minimap:draw()
+  for i = 1, 3 do
+    love.graphics.draw(health >= i and images.fullheart or images.emptyheart, 14*i, 14)
+  end
 end
 
 function state:keypressed(key, unicode)
