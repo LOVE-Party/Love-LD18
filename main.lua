@@ -29,6 +29,9 @@ function love.load()
   sounds = {}
   loadfromdir(sounds, "sfx", "ogg", love.sound.newSoundData)
   
+  music = {}
+  loadfromdir(music, "music", "ogg", love.audio.newSource)
+  
   Gamestate.registerEvents()
   local startstate = "intro"
   if arg[2] then
