@@ -64,9 +64,6 @@ function state:draw()
   love.graphics.push()
   player:center()
   arena:draw()
-  for i, v in ipairs(spawnlist) do
-    v.bull:draw()
-  end
   for _, bull in ipairs(bulls) do
     bull:draw()
   end
