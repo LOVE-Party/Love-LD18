@@ -21,11 +21,6 @@ function player:update(dt)
   self.y = self.y + y*speed*dt
 end
 
-function player:move(x, y)
-  self.x = self.x+x
-  self.y = self.y+y
-end
-
 function player:draw()
   local img = images.hat
   if self.gripping then img = images.hat_gripping end
