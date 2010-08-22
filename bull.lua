@@ -8,7 +8,7 @@ function bull:init(x, y, a)
   self.x = x or 0
   self.y = y or 0
   self.r = 0
-  self.cought = false
+  self.caught = false
   self.arena = a
 end
 
@@ -19,7 +19,7 @@ function bull:update(dt)
   self.x = self.x + x*speed*dt
   self.y = self.y + y*speed*dt
   self.r = self.r + (r*speed*dt)*0.01
-  
+
   --constrain to arena
   self.x = math.max(self.x, self.arena:left()+38)
   self.x = math.min(self.x, self.arena:right()-38)
@@ -29,6 +29,6 @@ end
 
 function bull:draw()
   local img = images.bull
-  if self.cought then img = images.bull_cought end
+  if self.caught then img = images.bull_caught end
   love.graphics.draw(img, self.x, self.y, self.r, 1, 1, 25, 25)
 end
