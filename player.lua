@@ -3,6 +3,7 @@ require "lib/SECS"
 local speed = 125
 local lassospeed = 5
 local ropelength = 300
+local ropelengthSq = ropelength*ropelength
 local bulls
 
 player = class:new()
@@ -78,6 +79,17 @@ function player:update(dt)
   y = (getkey("down") and 1 or 0) - (getkey("up") and 1 or 0)
   self.x = self.x + x*speed*dt
   self.y = self.y + y*speed*dt
+  
+  --check player-caught bull distance and correct if needed
+  if self.gripping then
+    local bull = bulls[self.gripped]
+    local dist = (self.x - bull.x) * (self.x - bull.x) + (self.y - bull.y) * (self.y - bull.y)
+    if dist > ropelengthSq then
+      local ropeangle = math.atan2(bull.y-self.y, bull.x-self.x)
+      bull.x = self.x + ropelength*math.cos(ropeangle);
+      bull.y = self.y + ropelength*math.sin(ropeangle);
+    end
+  end
   
   --constrain to arena
   self.x = math.max(self.x, self.arena:left()+25)
