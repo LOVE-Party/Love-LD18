@@ -64,7 +64,7 @@ function player:mousereleased(x, y, button)
         soundmanager:play(sounds.yeehaw)
          self.gripping = true
 	 self.gripped = bullid
-	 bulls[bullid].caught = true
+	 bulls[bullid].caught = self
       end
     end
   end

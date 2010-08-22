@@ -19,18 +19,28 @@ end
 function bull:update(dt)
   self.dur = self.dur - dt
   
-  if self.dur <= 0 then
-    local x,y = self.arena:center()
-    local r = math.atan2(y-self.y, x-self.x)
-    self.dir = r + ((math.random() * math.pi) - (math.pi * 0.5))
-    self.dirX = math.cos(self.dir)
-    self.dirY = math.sin(self.dir)
-    self.dur = math.random(1,4)
-  end
+  if not self.caught then
+    if self.dur <= 0 then
+      local x,y = self.arena:center()
+      local r = math.atan2(y-self.y, x-self.x)
+      self.dir = r + ((math.random() * math.pi) - (math.pi * 0.5))
+      self.dirX = math.cos(self.dir)
+      self.dirY = math.sin(self.dir)
+      self.dur = math.random(1,4)
+    end
   
-  self.x = self.x + self.dirX*speed*dt
-  self.y = self.y + self.dirY*speed*dt
-  self.r = self.dir + (math.pi * 0.5)
+    self.x = self.x + self.dirX*speed*dt
+    self.y = self.y + self.dirY*speed*dt
+    self.r = self.dir + (math.pi * 0.5)
+  else
+    local p = self.caught
+    local angle = math.atan2(p.y-self.y, p.x-self.x)+0.5*math.pi
+    local x, y = math.cos(angle), math.sin(angle)
+
+    self.x = self.x + x*speed*dt
+    self.y = self.y + y*speed*dt
+    self.r = angle+0.5*math.pi
+  end
 
   --constrain to arena
   self.x = math.max(self.x, self.arena:left()+38)
