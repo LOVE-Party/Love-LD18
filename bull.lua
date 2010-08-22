@@ -1,6 +1,7 @@
 require "lib/SECS"
 
 local speed = 200
+local capturedspeed = 600;
 
 bull = class:new()
 
@@ -37,8 +38,8 @@ function bull:update(dt)
     local angle = math.atan2(p.y-self.y, p.x-self.x)+0.5*math.pi
     local x, y = math.cos(angle), math.sin(angle)
 
-    self.x = self.x + x*speed*dt
-    self.y = self.y + y*speed*dt
+    self.x = self.x + x*capturedspeed*dt
+    self.y = self.y + y*capturedspeed*dt
     self.r = angle+0.5*math.pi
   end
 
