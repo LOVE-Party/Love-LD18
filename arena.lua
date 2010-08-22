@@ -30,8 +30,8 @@ function arena:bottom()
 end
 
 function arena:center()
-  local x = ( self.x + self.width ) / 2
-  local y = ( self.y + self.height ) / 2
+  local x = (self.x + self.width) / 2
+  local y = (self.y + self.height) / 2
   return x, y
 end
 
