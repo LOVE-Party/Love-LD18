@@ -30,11 +30,14 @@ function state:update(dt)
 end
 
 function state:draw()
+  love.graphics.push()
   player:center()
   arena:draw()
   for _, bull in ipairs(bulls) do
     bull:draw()
   end
   player:draw()
+  love.graphics.pop()
+  --draw hud
 end
 
