@@ -1,6 +1,7 @@
 require "lib/SECS"
 
 local speed = 125
+local lassospeed = 5
 
 player = class:new()
 
@@ -21,14 +22,35 @@ function player:init(x, y, a)
   self.x = x or 0
   self.y = y or 0
   self.r = 0
+  self.lassor = 0
   self.gripping = false
   self.spinning = false
   self.arena = a
 end
 
+function player:mousepressed(x, y, button)
+  if button == "l" then
+    if self.gripping then
+      self.gripping = false
+    else
+      self.spinning = true
+    end
+  end
+end
+
+function player:mousereleased(x, y, button)
+  if button == "l" then
+    if self.spinning then
+      self.spinning = false
+      self.gripping = true
+    end
+  end
+end
+
 function player:update(dt)
   local x, y = love.mouse.getPosition()
   self.r = math.atan2(y-300, x-400)+0.5*math.pi
+  self.lassor = self.lassor + lassospeed*dt
   x = (getkey("right") and 1 or 0) - (getkey("left") and 1 or 0)
   y = (getkey("down") and 1 or 0) - (getkey("up") and 1 or 0)
   self.x = self.x + x*speed*dt
@@ -50,4 +72,8 @@ function player:draw()
   if self.gripping then img = images.hat_gripping end
   if self.spinning then img = images.hat_spinning end
   love.graphics.draw(img, self.x, self.y, self.r, 1, 1, 25, 25)
+  if self.spinning then
+    local x, y = math.cos(self.r)*40, math.sin(self.r)*40
+    love.graphics.draw(images.lasso, self.x+x, self.y+y, self.lassor, 1, 1, 12, 12)
+  end
 end

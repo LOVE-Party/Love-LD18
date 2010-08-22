@@ -10,6 +10,14 @@ function state:enter()
   bull = _G.bull:new(400, 300, arena)
 end
 
+function state:mousepressed(x, y, button)
+  player:mousepressed(x, y, button)
+end
+
+function state:mousereleased(x, y, button)
+  player:mousereleased(x, y, button)
+end
+
 function state:update(dt)
   player:update(dt)
   bull:update(dt)
