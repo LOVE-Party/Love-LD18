@@ -48,3 +48,7 @@ end
 function state:keypressed(key, unicode)
   Gamestate.switch(Gamestate.menu)
 end
+
+function state:mousepressed(x, y, button)
+  Gamestate.switch(Gamestate.menu)
+end
