@@ -11,10 +11,32 @@ function loadfromdir(targettable, path, extension, func)
   end
 end
 
-function BoxBoxCollision(a, b)
-	a = {x=a[1], y=a[2], x2=a[1]+a[3], y2=a[2]+a[4]}
-	b = {x=b[1], y=b[2], x2=b[1]+b[3], y2=b[2]+b[4]}
+local function boxtocircle(b)
+	local circle = {}
+	circle.x = (b.x + b.w) / 2
+	circle.y = (b.y + b.h) / 2
+	circle.r = math.sqrt((b.h^2) + (b.w^2))
+	return circle
+end
+
+function CircleCircleCollision(a, b)
+	local t_radius = a.r + b.r
+	      t_radius = math.sqrt(t_radius)
+	local t_distance = math.sqrt((a.x - b.x)^2 + (a.y - b.y)^2)
 	
-	return (a.x >= b.x and a.x <= b.x2) and (a.y >= b.y and a.y <= b.y2) or
-	       (a.x2 >= b.x2 and a.x2 <= b.x) and (a.y2 >= b.y2 and a.y2 <= b.y)
+	print("distance:", t_distance, "radius", t_radius)
+	
+	return t_distance < t_radius
+end
+
+local function arraytobox(a)
+	return {x=a[1], y=a[2], w=a[1]+a[3], h=a[2]+a[4], r=a[5]}
+end
+
+function BoxBoxCollision(a, b)
+	a = arraytobox(a)
+	b = arraytobox(b)
+	
+	return CircleCircleCollision(boxtocircle(a), boxtocircle(b))
+	
 end
