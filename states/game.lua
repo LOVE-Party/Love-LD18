@@ -39,7 +39,7 @@ function state:update(dt)
     elseif gate == 3 then x = arena:right()
     elseif gate == 4 then y = arena:bottom()
     end
-    table.insert(spawnlist, {bull = bull:new(x, y, arena), gate = gate})
+    table.insert(spawnlist, {bull = bull:new(x, y, arena, player), gate = gate})
     arena:opengate(gate)
     timer = 0
   end
@@ -58,6 +58,23 @@ function state:update(dt)
   player:update(dt)
   for _, bull in ipairs(bulls) do
     bull:update(dt)
+  end
+  --collisions!
+  local playerhitbox = {player.x-25, player.y-13, 50, 30, player.r}
+  local bullhitbox = {0, 0, 75, 135, 0}
+  local removelist = {}
+  for i, v in ipairs(bulls) do
+    bullhitbox[1] = v.x-25
+    bullhitbox[2] = v.y-25
+    bullhitbox[5] = v.r
+    if not v.caught and BoxBoxCollision(bullhitbox, playerhitbox) then
+      --OH GOD WE COLLIDE!
+      health = health - 1
+      table.insert(removelist, i)
+    end
+  end
+  for i, v in ipairs(removelist) do
+    table.remove(bulls, v-i+1)
   end
 end
 

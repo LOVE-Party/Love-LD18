@@ -11,17 +11,10 @@ function loadfromdir(targettable, path, extension, func)
   end
 end
 
--- Collision detection function.
--- Checks if box1 and box2 overlap.
--- w and h mean width and height.
-function BoxBoxCollision(box1x, box1y, box1w, box1h, box2x, box2y, box2w, box2h)
-    if box1x > box2x + box2w - 1 or -- Is box1 on the right side of box2?
-       box1y > box2y + box2h - 1 or -- Is box1 under box2?
-       box2x > box1x + box1w - 1 or -- Is box2 on the right side of box1?
-       box2y > box1y + box1h - 1    -- Is b2 under b1?
-    then
-        return false                -- No collision. Yay!
-    else
-        return true                 -- Yes collision. Ouch!
-    end
+function BoxBoxCollision(a, b)
+	a = {x=a[1], y=a[2], x2=a[1]+a[3], y2=a[2]+a[4]}
+	b = {x=b[1], y=b[2], x2=b[1]+b[3], y2=b[2]+b[4]}
+	
+	return (a.x >= b.x and a.x <= b.x2) and (a.y >= b.y and a.y <= b.y2) or
+	       (a.x2 >= b.x2 and a.x2 <= b.x) and (a.y2 >= b.y2 and a.y2 <= b.y)
 end
