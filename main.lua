@@ -9,6 +9,7 @@ require("states/game")
 
 --classes requires
 require("player")
+require("arena")
 
 function love.load()
   love.graphics.setBackgroundColor(50, 50, 50)
