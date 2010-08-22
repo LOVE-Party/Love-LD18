@@ -72,3 +72,8 @@ function state:draw()
   minimap:draw()
 end
 
+function state:keypressed(key, unicode)
+  if key == "rctrl" then
+    debug.debug()
+  end
+end

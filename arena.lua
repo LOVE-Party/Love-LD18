@@ -95,6 +95,13 @@ end
 function arena:draw()
   love.graphics.setColor(255,255,255)
   
+  --Draw floor
+  for i = -256, self.width+256, 128 do
+    for n=-256, self.height+256, 128 do
+      love.graphics.draw(images.sandtile, i, n)
+    end
+  end
+  
   --draw top walls
   for i = 128, self.width-256, 256 do
     if i == 640 then
