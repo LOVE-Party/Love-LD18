@@ -3,6 +3,7 @@ local state = Gamestate.game
 local player
 local arena
 local bulls = {}
+local minimap
 
 function state:enter()
   love.graphics.setBackgroundColor(236,227,200)
@@ -11,6 +12,7 @@ function state:enter()
   for i = 1, 1 do
     table.insert(bulls, bull:new(400, 300, arena))
   end
+  minimap = _G.minimap:new(player,arena,bulls)
 end
 
 function state:mousepressed(x, y, button)
@@ -39,5 +41,6 @@ function state:draw()
   player:draw()
   love.graphics.pop()
   --draw hud
+  minimap:draw()
 end
 

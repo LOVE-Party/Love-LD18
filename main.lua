@@ -11,6 +11,7 @@ require("states/game")
 require("player")
 require("bull")
 require("arena")
+require("minimap")
 
 function love.load()
   love.graphics.setBackgroundColor(50, 50, 50)
