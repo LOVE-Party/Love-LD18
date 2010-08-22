@@ -10,10 +10,13 @@ local spawnlist
 function state:enter()
   bulls = {}
   spawnlist = {}
-  timer = 15
+  timer = 0
   love.graphics.setBackgroundColor(236,227,200)
   arena = _G.arena:new(0,0,1408,1408)
   player = _G.player:new(400, 300, arena, bulls)
+  for i = 1, 1 do
+    table.insert(bulls, bull:new(400, 300, arena))
+  end
   minimap = _G.minimap:new(player, arena, bulls, spawnlist)
 end
 
@@ -26,6 +29,7 @@ function state:mousereleased(x, y, button)
 end
 
 function state:update(dt)
+  soundmanager:update(dt)
   timer = timer + dt
   if timer > 15 then
     local gate = math.random(1, 4)
