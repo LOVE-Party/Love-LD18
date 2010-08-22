@@ -63,7 +63,7 @@ function state:update(dt)
   local playerhitbox = {player.x-25, player.y-13, 50, 30}
   local removelist = {}
   for i, v in ipairs(bulls) do
-    if BoxBoxCollision(v.x-25, v.y-25, 75, 135, unpack(playerhitbox)) then
+    if not v.caught and BoxBoxCollision(v.x-25, v.y-25, 75, 135, unpack(playerhitbox)) then
       --OH GOD WE COLLIDE!
       health = health - 1
       table.insert(removelist, i)
