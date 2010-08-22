@@ -3,7 +3,7 @@ require "lib/SECS"
 local speed = 125
 local lassospeed = 5
 local ropelength = 300
-local ropelengthSq = ropelength*ropelength
+local ropelengthSq = ropelength^2
 local bulls
 
 player = class:new()
