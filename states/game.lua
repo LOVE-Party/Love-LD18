@@ -22,6 +22,7 @@ function state:mousereleased(x, y, button)
 end
 
 function state:update(dt)
+  arena:update(dt)
   player:update(dt)
   for _, bull in ipairs(bulls) do
     bull:update(dt)
