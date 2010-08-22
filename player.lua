@@ -1,5 +1,7 @@
 require "SECS"
 
+local speed = 75
+
 player = class:new()
 
 function player:init(x, y)
@@ -13,6 +15,10 @@ end
 function player:update(dt)
   local x, y = love.mouse.getPosition()
   self.r = math.atan2(y-self.y, x-self.x)+0.5*math.pi
+  x = (love.keyboard.isDown("d") and 1 or 0) - (love.keyboard.isDown("a") and 1 or 0)
+  y = (love.keyboard.isDown("s") and 1 or 0) - (love.keyboard.isDown("w") and 1 or 0)
+  self.x = self.x + x*speed*dt
+  self.y = self.y + y*speed*dt
 end
 
 function player:draw()
