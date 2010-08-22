@@ -4,6 +4,19 @@ local speed = 75
 
 player = class:new()
 
+local function getkey(k)
+	local lk = love.keyboard
+	if k == 'up'    then 
+		return lk.isDown("w") or lk.isDown("up") 
+	elseif k == 'down'  then 
+		return lk.isDown("s") or lk.isDown("down")
+	elseif k == 'left'  then 
+		return lk.isDown("a") or lk.isDown("left")
+	elseif k == 'right' then 
+		return lk.isDown("d") or lk.isDown("right")
+	end
+end
+
 function player:init(x, y, a)
   self.x = x or 0
   self.y = y or 0
@@ -16,8 +29,10 @@ end
 function player:update(dt)
   local x, y = love.mouse.getPosition()
   self.r = math.atan2(y-self.y, x-self.x)+0.5*math.pi
-  x = (love.keyboard.isDown("d") and 1 or 0) - (love.keyboard.isDown("a") and 1 or 0)
-  y = (love.keyboard.isDown("s") and 1 or 0) - (love.keyboard.isDown("w") and 1 or 0)
+--  x = (love.keyboard.isDown("d") and 1 or 0) - (love.keyboard.isDown("a") and 1 or 0)
+--  y = (love.keyboard.isDown("s") and 1 or 0) - (love.keyboard.isDown("w") and 1 or 0)
+  x = (getkey("right") and 1 or 0) - (getkey("left") and 1 or 0)
+  y = (getkey("down") and 1 or 0) - (getkey("up") and 1 or 0)
   self.x = self.x + x*speed*dt
   self.y = self.y + y*speed*dt
   
