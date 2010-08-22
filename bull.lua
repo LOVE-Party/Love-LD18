@@ -71,6 +71,11 @@ function bull:update(dt)
   if self.x ~= x or self.y ~= y then
     --we ran into a wall
     self.hitwall = true
+    --player loses control now
+    if self.caught then
+      self.caught.gripping = false
+      self.caught = false 
+    end
   end
 end
 
