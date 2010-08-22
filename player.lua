@@ -79,6 +79,12 @@ function player:update(dt)
   y = (getkey("down") and 1 or 0) - (getkey("up") and 1 or 0)
   self.x = self.x + x*speed*dt
   self.y = self.y + y*speed*dt
+
+  if self.gripping then
+    local bull = bulls[self.gripped]
+    local angle = math.atan2(self.y-bull.y, self.x-bull.x)-0.5*math.pi
+    self.r = angle
+  end
   
   --check player-caught bull distance and correct if needed
   if self.gripping then
