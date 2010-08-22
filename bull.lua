@@ -1,7 +1,10 @@
 require "lib/SECS"
+require "lib/AnAL"
 
 local speed = 200
-local capturedspeed = 600;
+local capturedspeed = 600
+local normalAnim
+local caughtAnim
 
 bull = class:new()
 
@@ -15,10 +18,16 @@ function bull:init(x, y, a)
   self.r = 0
   self.caught = false
   self.arena = a
+  normalAnim = newAnimation(images.bulls, 76, 167, 0.1, 8)
+  normalAnim:play()
+  caughtAnim = newAnimation(images.bulls_caught, 76, 167, 0.1, 8)
+  caughtAnim:play()
 end
 
 function bull:update(dt)
   self.dur = self.dur - dt
+  normalAnim:update(dt)
+  caughtAnim:update(dt)
   
   if not self.caught then
     if self.dur <= 0 then
@@ -51,7 +60,7 @@ function bull:update(dt)
 end
 
 function bull:draw()
-  local img = images.bull
-  if self.caught then img = images.bull_caught end
-  love.graphics.draw(img, self.x, self.y, self.r, 1, 1, 25, 25)
+  local anim = normalAnim
+  if self.caught then anim = caughtAnim end
+  anim:draw(self.x, self.y, self.r, 1, 1, 25, 25)
 end
