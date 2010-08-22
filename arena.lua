@@ -24,6 +24,7 @@ function arena:opengate(g)
   elseif g == "bottom" then
     n = 4
   end
+  n = n or tonumber(g)
   if not n then return end
   gatedirs[n] = 1
 end
@@ -39,10 +40,26 @@ function arena:closegate(g)
   elseif g == "bottom" then
     n = 4
   end
+  n = n or tonumber(g)
   if not n then return end
   gatedirs[n] = -1
 end
 
+function arena:gateopen(g)
+  local n
+  if g == "top" then
+    n = 1
+  elseif g == "left" then
+    n = 2
+  elseif g == "right" then
+    n = 3
+  elseif g == "bottom" then
+    n = 4
+  end
+  n = n or tonumber(g)
+  if not n then return end
+  return gates[n] == 128
+end
 
 function arena:update(dt)
   for i, v in ipairs(gates) do
