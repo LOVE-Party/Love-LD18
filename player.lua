@@ -109,7 +109,7 @@ function player:draw()
   if self.spinning then img = images.hat_spinning end
   love.graphics.draw(img, self.x, self.y, self.r, 1, 1, 25, 25)
   if self.spinning then
-    local x, y = math.cos(self.r)*40, math.sin(self.r)*40
+    local x, y = math.cos(self.r-0.6)*30, math.sin(self.r-0.6)*30
     love.graphics.draw(images.lasso, self.x+x, self.y+y, self.lassor, 1, 1, 12, 12)
   elseif self.gripping then
     local bull = bulls[self.gripped]
