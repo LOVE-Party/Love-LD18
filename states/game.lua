@@ -61,7 +61,7 @@ function state:update(dt)
   end
   --collisions!
   local playerhitbox = {player.x-25, player.y-13, 50, 30, player.r}
-  local bullhitbox = {0, 0, 75, 135}
+  local bullhitbox = {0, 0, 75, 135, 0}
   local removelist = {}
   for i, v in ipairs(bulls) do
     bullhitbox[1] = v.x-25
