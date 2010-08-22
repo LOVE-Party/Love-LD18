@@ -16,9 +16,8 @@ function state:update(dt)
 end
 
 function state:draw()
-  love.graphics.printf("Wee, a game!", 0, 300, 800, "center")
+  arena:draw()
   bull:draw()
   player:draw()
-  arena:draw()
 end
 

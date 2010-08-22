@@ -1,6 +1,6 @@
 require "SECS"
 
-local speed = 75
+local speed = 125
 
 player = class:new()
 
