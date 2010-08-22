@@ -9,6 +9,7 @@ require("states/game")
 
 --classes requires
 require("player")
+require("bull")
 require("arena")
 
 function love.load()
