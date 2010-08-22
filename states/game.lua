@@ -59,6 +59,19 @@ function state:update(dt)
   for _, bull in ipairs(bulls) do
     bull:update(dt)
   end
+  --collisions!
+  local playerhitbox = {player.x-25, player.y-13, 50, 30}
+  local removelist = {}
+  for i, v in ipairs(bulls) do
+    if not v.caught and BoxBoxCollision(v.x-25, v.y-25, 75, 135, unpack(playerhitbox)) then
+      --OH GOD WE COLLIDE!
+      health = health - 1
+      table.insert(removelist, i)
+    end
+  end
+  for i, v in ipairs(removelist) do
+    table.remove(bulls, v-i+1)
+  end
 end
 
 function state:draw()
