@@ -58,3 +58,9 @@ function state:keypressed(key, unicode)
     love.event.push('q')
   end
 end
+
+function state:mousepressed(x,y,button)
+  if button == "l" then
+    Gamestate.switch(Gamestate.game)
+  end
+end
