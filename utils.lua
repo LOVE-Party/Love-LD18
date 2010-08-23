@@ -20,11 +20,8 @@ local function boxtocircle(b)
 end
 
 function CircleCircleCollision(a, b)
-	local t_radius = a.r + b.r
-	      t_radius = math.sqrt(t_radius)
+	local t_radius = math.sqrt(a.r + b.r)
 	local t_distance = math.sqrt((a.x - b.x)^2 + (a.y - b.y)^2)
-	
-	print("distance:", t_distance, "radius", t_radius)
 	
 	return t_distance < t_radius
 end
