@@ -30,6 +30,7 @@ local function createblood(x, y, amount, speedMin, speedMax)
   p:setPosition(x, y)
   p:setSpeed(speedMin, speedMax)
   p:setEmissionRate(amount)
+  p:setColor(255, 255, 255, 255, 255, 255, 255, 0)
   p:start()
   table.insert(blood, p)
 end
