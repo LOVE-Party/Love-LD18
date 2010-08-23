@@ -114,6 +114,7 @@ function state:update(dt)
       v.r = v.r+math.pi
       invuln = 1
     elseif not v.caught and caughtbull and BoxBoxCollision(bullhitbox, caughtbullhitbox) then
+      soundmanager:play(sounds.moo)
       table.insert(removelist, i)
       table.insert(gorelist, {bull = v, timer = 0, alpha = 255})
     end
