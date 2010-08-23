@@ -147,6 +147,9 @@ function state:update(dt)
   end
   for i, v in ipairs(removelist) do
     table.remove(bulls, v-i+1)
+    if player.gripping and (v-i+1) < player.gripped then
+      player.gripped = player.gripped - 1
+    end
   end
   if health <= 0 then
     Gamestate.switch(Gamestate.lost, score)
