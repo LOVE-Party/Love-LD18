@@ -24,7 +24,7 @@ local function getkey(k)
   end
 end
 
-function player:init(x, y, a, b)
+function player:init(x, y, a, b, c)
   self.x = x or 0
   self.y = y or 0
   self.r = 0
@@ -35,6 +35,7 @@ function player:init(x, y, a, b)
   self.moving = false
   self.arena = a
   bulls = b
+  self.cb = c
   love.graphics.setLineWidth(3)
   if not walkAnim then
     walkAnim = newAnimation(images.playerwalkanimation, 58, 64, 0.1, 16)
@@ -51,6 +52,7 @@ function player:mousepressed(x, y, button)
     if self.gripping then
       self.gripping = false
       bulls[self.gripped].caught = false
+      self.cb(false)
     else
       self.spinning = true
     end
@@ -78,6 +80,7 @@ function player:mousereleased(x, y, button)
          self.gripping = true
 	 self.gripped = bullid
 	 bulls[bullid].caught = self
+	 self.cb(true)
       end
     end
   end

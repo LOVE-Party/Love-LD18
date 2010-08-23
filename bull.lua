@@ -92,6 +92,7 @@ function bull:update(dt)
     --player loses control now
     if self.caught then
       self.caught.gripping = false
+      self.caught.cb(false)
       self.caught = false 
     end
   end

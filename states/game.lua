@@ -11,7 +11,14 @@ local gorelist
 local invuln
 local guifont
 local score
-local combo = 1
+local combo
+local combotimer
+
+local function caughtcb(caught)
+  if caught then combotimer = 0
+  else combo = 0
+  end
+end
 
 function state:enter()
   bulls = {}
@@ -20,10 +27,12 @@ function state:enter()
   timer = 15
   health = 3
   score = 0
+  combo = 0
+  combotimer = 0
   invuln = false
   love.graphics.setBackgroundColor(236,227,200)
   arena = _G.arena:new(0,0,1408,1408)
-  player = _G.player:new(400, 300, arena, bulls)
+  player = _G.player:new(400, 300, arena, bulls, caughtcb)
   minimap = _G.minimap:new(player, arena, bulls, spawnlist)
   soundmanager:playMusic(music.vestapol)
   if not guifont then guifont = love.graphics.newFont("fonts/Chunkfive.otf", 24) end
@@ -83,6 +92,15 @@ function state:update(dt)
     invuln = invuln - dt
     if invuln < 0 then invuln = false end
   end
+  if player.gripping then
+    combotimer = combotimer + dt
+    if combotimer > 8 then
+      combo = 0
+      bulls[player.gripped].caught = false
+      player.gripping = false
+      combo = 0
+    end
+  end
   --collisions!
   local playerhitbox = {player.x-25, player.y-13, 50, 30, player.r}
   local caughtbull = player.gripping
@@ -106,6 +124,7 @@ function state:update(dt)
       if player.gripping then
         bulls[player.gripped].caught = false
 	player.gripping = false
+	combo = 0
       end
       v.dur = 3
       v.dir = v.dir+math.pi
@@ -114,6 +133,9 @@ function state:update(dt)
       v.r = v.r+math.pi
       invuln = 1
     elseif not v.caught and caughtbull and BoxBoxCollision(bullhitbox, caughtbullhitbox) then
+      combo = combo + 1
+      combotimer = 0
+      score = score + 100*combo
       table.insert(removelist, i)
       table.insert(gorelist, {bull = v, timer = 0, alpha = 255})
     end
@@ -151,7 +173,7 @@ function state:draw()
   love.graphics.setColor(50,50,50)
   love.graphics.setFont(guifont)
   love.graphics.print("Score: "..score, 14, 72)
-  love.graphics.print("x "..combo-1, 55, 108)
+  love.graphics.print("x "..combo, 55, 108)
 end
 
 function state:keypressed(key, unicode)
