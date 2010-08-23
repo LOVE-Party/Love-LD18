@@ -2,7 +2,7 @@ require "lib/SECS"
 require "lib/AnAL"
 
 local speed = 125
-local lassospeed = 5
+local lassospeed = 10
 local lassothrowspeed = 10
 local ropelength = 300
 local ropelengthSq = ropelength^2
@@ -140,11 +140,11 @@ function player:draw()
   if not self.moving or self.gripping then
     local img = images.hat
     if self.gripping then img = images.hat_gripping end
-    if self.spinning then img = images.hat_spinning end
+    if self.spinning or self.throwing then img = images.hat_spinning end
     love.graphics.draw(img, self.x, self.y, self.r, 1, 1, 25, 25)
   else
     local anim = walkAnim
-    if self.spinning then anim = spinAnim end
+    if self.spinning or self.throwing then anim = spinAnim end
     anim:draw(self.x, self.y, self.r, 1, 1, 25, 25)
   end
   if self.spinning then
@@ -159,6 +159,15 @@ function player:draw()
     love.graphics.setColor(255, 255, 255)
   end
   if self.throwing then
+    local dist = math.sqrt((self.x-self.lasso.x)^2 + (self.y-self.lasso.y)^2)
+    local angle = math.atan2(self.lasso.y-self.y, self.lasso.x-self.x)
+    dist = dist - 37
+    local x, y = math.cos(self.r-0.6)*30, math.sin(self.r-0.6)*30
+    local tx = math.cos(angle)*dist
+    local ty = math.sin(angle)*dist
+    love.graphics.setColor(104, 89, 67)
+    love.graphics.line(self.x+x,self.y+y, self.x+tx, self.y+ty)
+    love.graphics.setColor(255, 255, 255)
     love.graphics.draw(images.lasso, self.lasso.x, self.lasso.y, 0, 1, 1, 37, 37)
   end
 end
