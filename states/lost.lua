@@ -24,6 +24,8 @@ function state:draw()
 end
 
 function state:keypressed(key, unicode)
-  love.audio.stop()
-  Gamestate.switch(Gamestate.menu)
+  if key == "escape" then
+    love.audio.stop()
+    Gamestate.switch(Gamestate.menu)
+  end
 end
