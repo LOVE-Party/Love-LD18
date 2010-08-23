@@ -48,7 +48,7 @@ function state:draw()
   love.graphics.print("Single click", 390, 410)
   
   love.graphics.setFont(subtitlefont)
-  love.graphics.print("Press ENTER to play!", 400-subtitlefont:getWidth("Press ENTER to play!")/2, 500)
+  love.graphics.print("Click HERE to play!", 400-subtitlefont:getWidth("Click HERE to play!")/2, 500)
 end
 
 function state:keypressed(key, unicode)
