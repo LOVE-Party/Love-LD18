@@ -78,9 +78,9 @@ function player:mousereleased(x, y, button)
       if dist <= ropelengthSq then
         soundmanager:play(sounds.yeehaw)
          self.gripping = true
-	 self.gripped = bullid
-	 bulls[bullid].caught = self
-	 self.cb(true)
+          self.gripped = bullid
+          bulls[bullid].caught = self
+          self.cb(true)
       end
     end
   end

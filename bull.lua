@@ -51,12 +51,12 @@ function bull:update(dt)
       local x, y, r
       if math.random(1, 7) > 4 then
         x, y = self.arena:center()
-	r = math.atan2(y-self.y, x-self.x)
+        r = math.atan2(y-self.y, x-self.x)
         self.dir = r + (math.random()-0.5)*math.pi
       else
         x, y = self.player.x, self.player.y
-	r = math.atan2(y-self.y, x-self.x)
-	self.dir = r + 0.05*math.random()
+        r = math.atan2(y-self.y, x-self.x)
+        self.dir = r + 0.05*math.random()
       end
       self.dirX = math.cos(self.dir)
       self.dirY = math.sin(self.dir)
