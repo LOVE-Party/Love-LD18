@@ -143,17 +143,7 @@ function player:draw()
     love.graphics.setColor(104, 89, 67)
     love.graphics.line(self.x+x, self.y+y, bull.x, bull.y)
     love.graphics.setColor(255, 255, 255)
-  end
-  
-  --drawhitbox
-  local colBox = rotatebox(self:gethitbox())
-  love.graphics.setColor(255,0,0)
-  love.graphics.line( colBox[1].x, colBox[1].y, colBox[2].x, colBox[2].y )
-  love.graphics.line( colBox[3].x, colBox[3].y, colBox[2].x, colBox[2].y )
-  love.graphics.line( colBox[1].x, colBox[1].y, colBox[4].x, colBox[4].y )
-  love.graphics.line( colBox[3].x, colBox[3].y, colBox[4].x, colBox[4].y )
-  love.graphics.setColor(255,255,255);
-  
+  end  
 end
 
 function player:gethitbox()
