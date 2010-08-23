@@ -29,14 +29,16 @@ function bull:init(x, y, a, p)
     caughtAnim:play()
   end
   self.dustParticles = love.graphics.newParticleSystem(images.dust, 25)
-  self.dustParticles:setSpeed(2, 7)
+  self.dustParticles:setSpeed(5, 10)
+  self.dustParticles:setSpread(math.rad(180))
+  self.dustParticles:setSize(0.9, 1.1, 1)
   self.dustParticles:setPosition(self.x, self.y)
   self.dustParticles:setDirection(self.r+math.pi)
   self.dustParticles:setLifetime(-1)
   self.dustParticles:setEmissionRate(6)
   self.dustParticles:setParticleLife(1.50)
   self.dustParticles:setSpin(0.1, 1.0, 1)
-  self.dustParticles:setColor(255, 255, 255, 255, 255, 255, 255, 0)
+  self.dustParticles:setColor(255, 255, 255, 225, 255, 255, 255, 0)
   self.dustParticles:start()
 end
 
