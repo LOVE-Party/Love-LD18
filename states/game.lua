@@ -70,6 +70,10 @@ function state:update(dt)
     if not v.caught and BoxBoxCollision(bullhitbox, playerhitbox) then
       --OH GOD WE COLLIDE!
       health = health - 1
+      if player.gripping then
+        bulls[player.gripped].caught = false
+	player.gripping = false
+      end
       table.insert(removelist, i)
     end
   end
