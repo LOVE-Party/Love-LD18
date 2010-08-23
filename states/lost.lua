@@ -19,12 +19,12 @@ function state:draw()
   love.graphics.setFont(largefont)
   love.graphics.printf("Splat!", 300, 300, 200, "center")
   love.graphics.setFont(font)
-  love.graphics.printf("Awww, you died. Good thing you can just restart by pressing escape!", 275, 400, 250, "center")
+  love.graphics.printf("Awww, you died. Good thing you can just restart by pressing enter!", 275, 400, 250, "center")
   love.graphics.setColor(255, 255, 255)
 end
 
 function state:keypressed(key, unicode)
-  if key == "escape" then
+  if key == "escape" or key == "return" then
     love.audio.stop()
     Gamestate.switch(Gamestate.menu)
   end
