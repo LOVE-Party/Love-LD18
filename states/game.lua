@@ -81,6 +81,7 @@ function state:update(dt)
   for i, v in ipairs(gorelist) do
     v.timer = v.timer + dt
     v.alpha = 255*(5-v.timer)/5
+    v.bull.dustParticles:update(dt)
     if v.timer > 5 then
        table.insert(removelist, i)
     end
@@ -142,7 +143,8 @@ function state:update(dt)
       score = score + 100*combo
       soundmanager:play(sounds.splat)
       table.insert(removelist, i)
-      table.insert(gorelist, {bull = v, timer = 0, alpha = 255})
+      table.insert(gorelist, {bull = v, timer = 0, alpha = 255, combo = combo})
+      v.dustParticles:stop()
     end
   end
   for i, v in ipairs(removelist) do
@@ -162,7 +164,9 @@ function state:draw()
   arena:draw()
   for i, v in ipairs(gorelist) do
     love.graphics.setColor(255, 255, 255, v.alpha)
+    love.graphics.draw(v.bull.dustParticles, 0, 0)
     love.graphics.draw(images.gore, v.bull.x, v.bull.y, v.bull.r, 1, 1, 25, 25)
+    love.graphics.printf(v.combo .. "X", v.bull.x-30, v.bull.y-10, 60, "center")
   end
   love.graphics.setColor(255, 255, 255, 255)
   for _, bull in ipairs(bulls) do
