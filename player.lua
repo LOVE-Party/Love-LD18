@@ -3,6 +3,7 @@ require "lib/AnAL"
 
 local speed = 125
 local lassospeed = 5
+local lassothrowspeed = 10
 local ropelength = 300
 local ropelengthSq = ropelength^2
 local bulls
@@ -33,6 +34,12 @@ function player:init(x, y, a, b, c)
   self.spinning = false
   self.gripped = 0
   self.moving = false
+  self.throwing = false
+  self.lasso = {}
+  self.lasso.x = 0
+  self.lasso.y = 0
+  self.lasso.dirx = 0
+  self.lasso.diry = 0
   self.arena = a
   bulls = b
   self.cb = c
@@ -63,25 +70,11 @@ function player:mousereleased(x, y, button)
   if button == "l" then
     if self.spinning then
       self.spinning = false
-      local dist = math.huge
-      local bullid = 0
-      for i, bull in ipairs(bulls) do
-        local angle = math.atan2(bull.y-self.y, bull.x-self.x)+0.5*math.pi
-        if math.abs(angle-self.r) < 0.15 then
-          local bdist = (bull.x-self.x)^2+(bull.y-self.y)^2
-        if bdist < dist then
-  	    dist = bdist
-	    bullid = i
-	  end
-	end
-      end
-      if dist <= ropelengthSq then
-        soundmanager:play(sounds.yeehaw)
-         self.gripping = true
-          self.gripped = bullid
-          bulls[bullid].caught = self
-          self.cb(true)
-      end
+      self.throwing = true
+      self.lasso.x = self.x
+      self.lasso.y = self.y
+      self.lasso.dirx = math.cos(self.r-0.5*math.pi)
+      self.lasso.diry = math.sin(self.r-0.5*math.pi)
     end
   end
 end
@@ -104,12 +97,33 @@ function player:update(dt)
   self.y = math.max(self.y, self.arena:top()+25)
   self.y = math.min(self.y, self.arena:bottom()-25)
 
+  if self.throwing then
+    self.lasso.x = self.lasso.x + self.lasso.dirx*lassothrowspeed
+    self.lasso.y = self.lasso.y + self.lasso.diry*lassothrowspeed
+    
+    local lassobox = { { x=self.lasso.x-37, y=self.lasso.y-37 },  { x=self.lasso.x+37, y=self.lasso.y-37 }, { x=self.lasso.x+37, y=self.lasso.y+37 }, { x=self.lasso.x-37, y=self.lasso.y+37 } }
+    for i, bull in ipairs(bulls) do
+      if quadsColliding(lassobox, rotatebox(bull:getbodybox())) or quadsColliding(lassobox, rotatebox(bull:getheadbox())) then
+        self.throwing = false
+        soundmanager:play(sounds.yeehaw)
+        self.gripping = true
+        self.gripped = i
+        bulls[i].caught = self
+        self.cb(true)
+      end
+    end
+    
+    if (self.x - self.lasso.x)^2 + (self.y - self.lasso.y)^2 > ropelengthSq then
+      self.throwing = false;
+    end
+  end
+  
   if self.gripping then
     local bull = bulls[self.gripped]
     if not bull then self.gripping = false return end
     local angle = math.atan2(self.y-bull.y, self.x-bull.x)-0.5*math.pi
     self.r = angle
-    local dist = (self.x - bull.x) * (self.x - bull.x) + (self.y - bull.y) * (self.y - bull.y)
+    local dist = (self.x - bull.x)^2 + (self.y - bull.y)^2
     if dist > ropelengthSq then
       local ropeangle = math.atan2(bull.y-self.y, bull.x-self.x)
       bull.x = self.x + ropelength*math.cos(ropeangle);
@@ -143,7 +157,10 @@ function player:draw()
     love.graphics.setColor(104, 89, 67)
     love.graphics.line(self.x+x, self.y+y, bull.x, bull.y)
     love.graphics.setColor(255, 255, 255)
-  end  
+  end
+  if self.throwing then
+    love.graphics.draw(images.lasso, self.lasso.x, self.lasso.y, 0, 1, 1, 37, 37)
+  end
 end
 
 function player:gethitbox()
