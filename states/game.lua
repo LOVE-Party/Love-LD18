@@ -10,6 +10,8 @@ local health
 local gorelist
 local invuln
 local guifont
+local score
+local combo = 1
 
 function state:enter()
   bulls = {}
@@ -17,6 +19,7 @@ function state:enter()
   gorelist = {}
   timer = 15
   health = 3
+  score = 0
   invuln = false
   love.graphics.setBackgroundColor(236,227,200)
   arena = _G.arena:new(0,0,1408,1408)
@@ -147,8 +150,8 @@ function state:draw()
   love.graphics.draw(images.comboicon, 14, 85)
   love.graphics.setColor(50,50,50)
   love.graphics.setFont(guifont)
-  love.graphics.print("Score: 23451", 14, 72)
-  love.graphics.print("x 8", 55, 108)
+  love.graphics.print("Score: "..score, 14, 72)
+  love.graphics.print("x "..combo-1, 55, 108)
 end
 
 function state:keypressed(key, unicode)
