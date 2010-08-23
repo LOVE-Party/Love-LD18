@@ -112,11 +112,15 @@ function state:update(dt)
     caughtbullhitbox[5] = caughtbull.r
   end
   local bullhitbox = {0, 0, 75, 135, 0}
+  local bullhitbox2 = {0, 0, 36, 36, 0}
   local removelist = {}
   for i, v in ipairs(bulls) do
     bullhitbox[1] = v.x-25
     bullhitbox[2] = v.y-25
     bullhitbox[5] = v.r
+    bullhitbox2[1] = v.x+12
+    bullhitbox2[2] = v.y+35
+    bullhitbox2[5] = v.r
     if not v.caught and BoxBoxCollision(bullhitbox, playerhitbox) and not invuln then
       --OH GOD WE COLLIDE!
       soundmanager:play(sounds.ow)
@@ -132,7 +136,7 @@ function state:update(dt)
       v.dirY = math.sin(v.dir)
       v.r = v.r+math.pi
       invuln = 1
-    elseif not v.caught and caughtbull and BoxBoxCollision(bullhitbox, caughtbullhitbox) then
+    elseif not v.caught and caughtbull and (BoxBoxCollision(bullhitbox, caughtbullhitbox) or BoxBoxCollision(bullhitbox2, caughtbullhitbox)) then
       combo = combo + 1
       combotimer = 0
       score = score + 100*combo
