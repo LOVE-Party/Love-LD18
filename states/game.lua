@@ -103,7 +103,7 @@ function state:update(dt)
     end
   end
   --collisions!
-  local playerhitbox = {player.x-25, player.y-13, 50, 30, player.r}
+  local playerhitbox = {x=player.x, y=player.y, w=50, h=30, r=player.r, ox=25, oy=13}
   local caughtbull = player.gripping
   local caughtbullhitbox = {0, 0, 75, 135, 0}
   if caughtbull then
@@ -122,7 +122,7 @@ function state:update(dt)
     bullhitbox2[1] = v.x+12
     bullhitbox2[2] = v.y+35
     bullhitbox2[5] = v.r
-    if not v.caught and BoxBoxCollision(bullhitbox, playerhitbox) and not invuln then
+    if not v.caught and quadsColliding(rotatebox(v:getheadbox()), rotatebox(playerhitbox)) and not invuln then
       --OH GOD WE COLLIDE!
       soundmanager:play(sounds.ow)
       health = health - 1

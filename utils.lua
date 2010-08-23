@@ -11,7 +11,7 @@ function loadfromdir(targettable, path, extension, func)
   end
 end
 
-local function rotatebox(a)
+function rotatebox(a)
   local quad = {{},{},{},{}}
   quad[1].x = a.x
   quad[1].y = a.y
@@ -23,7 +23,7 @@ local function rotatebox(a)
   quad[4].y = a.y+a.h
   local x, y = a.x+a.ox, a.y+a.oy
   for i = 1, 4 do
-    local dist = (quad[i].x-x)^2+(quad[i].y-y)^2
+    local dist = math.sqrt((quad[i].x-x)^2+(quad[i].y-y)^2)
     local angle = math.atan2(quad[i].y-y, quad[i].x-x)
     angle = angle + a.r
     quad[i].x = math.cos(angle)*dist+x
@@ -57,4 +57,42 @@ function BoxBoxCollision(a, b)
 	
 	return CircleCircleCollision(boxtocircle(a), boxtocircle(b))
 	
+end
+
+function isOnSegment(xi, yi, xj, yj, xk, yk)
+    return (xi <= xk or xj <= xk) and (xk <= xi or xk <= xj) and (yi <= yk or yj <= yk) and (yk <= yi or xk <= yj)
+end
+
+function computeDirection(xi, yi, xj, yj, xk, yk)
+    local a = (xk - xi) * (yj - yi)
+    local b = (xj - xi) * (yk - yi)
+    if a < b then return -1 elseif a > b then return 1 else return 0 end
+end
+
+function doLineSegmentsIntersect(x1, y1, x2, y2, x3, y3, x4, y4)
+    local d1 = computeDirection(x3, y3, x4, y4, x1, y1)
+    local d2 = computeDirection(x3, y3, x4, y4, x2, y2)
+    local d3 = computeDirection(x1, y1, x2, y2, x3, y3)
+    local d4 = computeDirection(x1, y1, x2, y2, x4, y4)
+    return (((d1 > 0 and d2 < 0) or (d1 < 0 and d2 > 0)) and 
+        ((d3 > 0 and d4 < 0) or (d3 < 0 and d4 > 0))) or 
+        (d1 == 0 and isOnSegment(x3, y3, x4, y4, x1, y1)) or 
+        (d2 == 0 and isOnSegment(x3, y3, x4, y4, x2, y2)) or 
+        (d3 == 0 and isOnSegment(x1, y1, x2, y2, x3, y3)) or 
+        (d4 == 0 and isOnSegment(x1, y1, x2, y2, x4, y4))
+end
+
+function quadsColliding( a, b )
+  for i=1,4 do
+    local nextI = i+1
+    if nextI == 5 then nextI = 1 end
+    for j=1,4 do
+      local nextJ = j+1
+      if nextJ == 5 then nextJ = 1 end
+      if doLineSegmentsIntersect(a[i].x, a[i].y, a[nextI].x, a[nextI].y, b[j].x, b[j].y, b[nextJ].x, b[nextJ].y) then
+        return true
+      end      
+    end
+  end
+  return false
 end

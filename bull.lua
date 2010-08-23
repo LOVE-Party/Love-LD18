@@ -105,4 +105,21 @@ function bull:draw()
   if self.caught then anim = caughtAnim end
   love.graphics.draw(self.dustParticles, 0, 0)
   anim:draw(self.x, self.y, self.r, 1, 1, 25, 25)
+  
+  --drawheadhitbox
+  local colBox = rotatebox(self:getheadbox())
+  love.graphics.setColor(255,0,0)
+  love.graphics.line( colBox[1].x, colBox[1].y, colBox[2].x, colBox[2].y )
+  love.graphics.line( colBox[3].x, colBox[3].y, colBox[2].x, colBox[2].y )
+  love.graphics.line( colBox[1].x, colBox[1].y, colBox[4].x, colBox[4].y )
+  love.graphics.line( colBox[3].x, colBox[3].y, colBox[4].x, colBox[4].y )
+  love.graphics.setColor(255,255,255);
+end
+
+function bull:getbodybox()
+  return { x = self.x-20, y = self.y, w = 66, h = 96, r = self.r, ox = 20, oy = 0 }
+end
+
+function bull:getheadbox()
+  return { x = self.x-15, y = self.y-25, w = 56, h = 25, r = self.r, ox = 15, oy = 25 }
 end
