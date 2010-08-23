@@ -24,7 +24,7 @@ function state:enter()
   bulls = {}
   spawnlist = {}
   gorelist = {}
-  timer = 15
+  timer = 10
   health = 3
   score = 0
   combo = 0
@@ -49,7 +49,7 @@ end
 function state:update(dt)
   soundmanager:update(dt)
   timer = timer + dt
-  if timer > 15 then
+  if timer > 10 then
     local gate = math.random(1, 4)
     local x, y = arena:center()
     if gate == 1 then y = arena:top()
@@ -127,8 +127,8 @@ function state:update(dt)
       health = health - 1
       if player.gripping then
         bulls[player.gripped].caught = false
-	player.gripping = false
-	combo = 0
+        player.gripping = false
+        combo = 0
       end
       v.dur = 3
       v.dir = v.dir+math.pi
