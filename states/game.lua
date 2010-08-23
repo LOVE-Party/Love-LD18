@@ -96,6 +96,7 @@ function state:update(dt)
     bullhitbox[5] = v.r
     if not v.caught and BoxBoxCollision(bullhitbox, playerhitbox) and not invuln then
       --OH GOD WE COLLIDE!
+      soundmanager:play(sounds.ow)
       health = health - 1
       if player.gripping then
         bulls[player.gripped].caught = false
