@@ -7,6 +7,7 @@ local ropelength = 300
 local ropelengthSq = ropelength^2
 local bulls
 local walkAnim
+local spinAnim
 
 player = class:new()
 
@@ -37,8 +38,11 @@ function player:init(x, y, a, b)
   love.graphics.setLineWidth(3)
   if not walkAnim then
     walkAnim = newAnimation(images.playerwalkanimation, 58, 64, 0.1, 16)
-    walkAnim:setMode("bounce")
     walkAnim:play()
+  end
+  if not spinAnim then
+    spinAnim = newAnimation(images.playerspinning, 55, 64, 0.1, 16)
+    spinAnim:play()
   end
 end
 
@@ -81,6 +85,7 @@ end
 
 function player:update(dt)
   walkAnim:update(dt)
+  spinAnim:update(dt)
   local x, y = love.mouse.getPosition()
   self.r = math.atan2(y-300, x-400)+0.5*math.pi
   self.lassor = self.lassor + lassospeed*dt
@@ -115,13 +120,15 @@ function player:center()
 end
 
 function player:draw()
-  local img = images.hat
-  if self.gripping then img = images.hat_gripping end
-  if self.spinning then img = images.hat_spinning end
-  if not self.moving or self.gripping or self.spinning then
+  if not self.moving or self.gripping then
+    local img = images.hat
+    if self.gripping then img = images.hat_gripping end
+    if self.spinning then img = images.hat_spinning end
     love.graphics.draw(img, self.x, self.y, self.r, 1, 1, 25, 25)
   else
-    walkAnim:draw(self.x, self.y, self.r, 1, 1, 25, 25)
+    local anim = walkAnim
+    if self.spinning then anim = spinAnim end
+    anim:draw(self.x, self.y, self.r, 1, 1, 25, 25)
   end
   if self.spinning then
     local x, y = math.cos(self.r-0.6)*30, math.sin(self.r-0.6)*30
