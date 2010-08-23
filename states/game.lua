@@ -7,10 +7,12 @@ local minimap
 local timer
 local spawnlist
 local health
+local gorelist
 
 function state:enter()
   bulls = {}
   spawnlist = {}
+  gorelist = {}
   timer = 15
   health = 3
   love.graphics.setBackgroundColor(236,227,200)
@@ -59,6 +61,17 @@ function state:update(dt)
   for _, bull in ipairs(bulls) do
     bull:update(dt)
   end
+  removelist = {}
+  for i, v in ipairs(gorelist) do
+    v.timer = v.timer + dt
+    v.alpha = 255*(2-v.timer)/2
+    if v.timer > 2 then
+       table.insert(removelist, i)
+    end
+  end
+  for i, v in ipairs(removelist) do
+    table.remove(gorelist, v-i+1)
+  end
   --collisions!
   local playerhitbox = {player.x-25, player.y-13, 50, 30, player.r}
   local caughtbull = player.gripping
@@ -85,6 +98,7 @@ function state:update(dt)
       table.insert(removelist, i)
     elseif not v.caught and caughtbull and BoxBoxCollision(bullhitbox, caughtbullhitbox) then
       table.insert(removelist, i)
+      table.insert(gorelist, {bull = v, timer = 0})
     end
   end
   for i, v in ipairs(removelist) do
@@ -99,6 +113,11 @@ function state:draw()
   love.graphics.push()
   player:center()
   arena:draw()
+  for i, v in ipairs(gorelist) do
+    love.graphics.setColor(255, 255, 255, v.alpha)
+    love.graphics.draw(images.gore, v.bull.x, v.bull.y, v.bull.r, 1, 1, 25, 25)
+  end
+  love.graphics.setColor(255, 255, 255, 255)
   for _, bull in ipairs(bulls) do
     bull:draw()
   end
