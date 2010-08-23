@@ -11,6 +11,27 @@ function loadfromdir(targettable, path, extension, func)
   end
 end
 
+local function rotatebox(a)
+  local quad = {{},{},{},{}}
+  quad[1].x = a.x
+  quad[1].y = a.y
+  quad[2].x = a.x+a.w
+  quad[2].y = a.y
+  quad[3].x = a.x+a.w
+  quad[3].y = a.y+a.h
+  quad[4].x = a.x
+  quad[4].y = a.y+a.h
+  local x, y = a.x+a.ox, a.y+a.oy
+  for i = 1, 4 do
+    local dist = (quad[i].x-x)^2+(quad[i].y-y)^2
+    local angle = math.atan2(quad[i].y-y, quad[i].x-x)
+    angle = angle + a.r
+    quad[i].x = math.cos(angle)*dist+x
+    quad[i].y = math.sin(angle)*dist+y
+  end
+  return quad
+end
+
 local function boxtocircle(b)
 	local circle = {}
 	circle.x = (b.x + b.w) / 2
