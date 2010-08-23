@@ -8,6 +8,7 @@ local timer
 local spawnlist
 local health
 local gorelist
+local invuln
 
 function state:enter()
   bulls = {}
@@ -15,6 +16,7 @@ function state:enter()
   gorelist = {}
   timer = 15
   health = 3
+  invuln = false
   love.graphics.setBackgroundColor(236,227,200)
   arena = _G.arena:new(0,0,1408,1408)
   player = _G.player:new(400, 300, arena, bulls)
@@ -72,6 +74,10 @@ function state:update(dt)
   for i, v in ipairs(removelist) do
     table.remove(gorelist, v-i+1)
   end
+  if invuln then
+    invuln = invuln - dt
+    if invuln < 0 then invuln = false end
+  end
   --collisions!
   local playerhitbox = {player.x-25, player.y-13, 50, 30, player.r}
   local caughtbull = player.gripping
@@ -88,14 +94,19 @@ function state:update(dt)
     bullhitbox[1] = v.x-25
     bullhitbox[2] = v.y-25
     bullhitbox[5] = v.r
-    if not v.caught and BoxBoxCollision(bullhitbox, playerhitbox) then
+    if not v.caught and BoxBoxCollision(bullhitbox, playerhitbox) and not invuln then
       --OH GOD WE COLLIDE!
       health = health - 1
       if player.gripping then
         bulls[player.gripped].caught = false
 	player.gripping = false
       end
-      table.insert(removelist, i)
+      v.dur = 3
+      v.dir = v.dir+math.pi
+      v.dirX = math.cos(v.dir)
+      v.dirY = math.sin(v.dir)
+      v.r = v.r+math.pi
+      invuln = 1
     elseif not v.caught and caughtbull and BoxBoxCollision(bullhitbox, caughtbullhitbox) then
       table.insert(removelist, i)
       table.insert(gorelist, {bull = v, timer = 0, alpha = 255})
