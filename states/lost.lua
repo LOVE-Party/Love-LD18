@@ -22,3 +22,8 @@ function state:draw()
   love.graphics.printf("Awww, you died. Good thing you can just restart then!", 275, 400, 250, "center")
   love.graphics.setColor(255, 255, 255)
 end
+
+function state:keypressed(key, unicode)
+  love.audio.stop()
+  Gamestate.switch(Gamestate.menu)
+end
