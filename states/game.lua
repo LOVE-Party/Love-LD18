@@ -132,7 +132,9 @@ function state:draw()
   for _, bull in ipairs(bulls) do
     bull:draw()
   end
+  if invuln then love.graphics.setColor(255, 255, 255, 255-(100*invuln)) end
   player:draw()
+  if invuln then love.graphics.setColor(255, 255, 255, 255) end
   love.graphics.pop()
   --draw hud
   minimap:draw()
