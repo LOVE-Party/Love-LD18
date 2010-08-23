@@ -1,10 +1,12 @@
 require "lib/SECS"
+require "lib/AnAL"
 
 local speed = 125
 local lassospeed = 5
 local ropelength = 300
 local ropelengthSq = ropelength^2
 local bulls
+local walkAnim
 
 player = class:new()
 
@@ -29,9 +31,14 @@ function player:init(x, y, a, b)
   self.gripping = false
   self.spinning = false
   self.gripped = 0
+  self.moving = false
   self.arena = a
   bulls = b
   love.graphics.setLineWidth(3)
+  if not walkAnim then
+    walkAnim = newAnimation(images.playerwalkanimation, 58, 64, 0.1, 16)
+    walkAnim:play()
+  end
 end
 
 function player:mousepressed(x, y, button)
@@ -72,6 +79,7 @@ function player:mousereleased(x, y, button)
 end
 
 function player:update(dt)
+  walkAnim:update(dt)
   local x, y = love.mouse.getPosition()
   self.r = math.atan2(y-300, x-400)+0.5*math.pi
   self.lassor = self.lassor + lassospeed*dt
@@ -79,6 +87,7 @@ function player:update(dt)
   y = (getkey("down") and 1 or 0) - (getkey("up") and 1 or 0)
   self.x = self.x + x*speed*dt
   self.y = self.y + y*speed*dt
+  self.moving = (x ~= 0 or y ~= 0)
 
   --constrain to arena
   self.x = math.max(self.x, self.arena:left()+25)
@@ -108,7 +117,11 @@ function player:draw()
   local img = images.hat
   if self.gripping then img = images.hat_gripping end
   if self.spinning then img = images.hat_spinning end
-  love.graphics.draw(img, self.x, self.y, self.r, 1, 1, 25, 25)
+  if not self.moving or self.gripping or self.spinning then
+    love.graphics.draw(img, self.x, self.y, self.r, 1, 1, 25, 25)
+  else
+    walkAnim:draw(self.x, self.y, self.r, 1, 1, 25, 25)
+  end
   if self.spinning then
     local x, y = math.cos(self.r-0.6)*30, math.sin(self.r-0.6)*30
     love.graphics.draw(images.lasso, self.x+x, self.y+y, self.lassor, 1, 1, 12, 12)
