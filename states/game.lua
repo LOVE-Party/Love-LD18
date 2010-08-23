@@ -137,7 +137,7 @@ function state:update(dt)
       v.dirY = math.sin(v.dir)
       v.r = v.r+math.pi
       invuln = 1
-    elseif not v.caught and caughtbull and (BoxBoxCollision(bullhitbox, caughtbullhitbox) or BoxBoxCollision(bullhitbox2, caughtbullhitbox)) then
+    elseif not v.caught and caughtbull and caughtbull ~= i and (BoxBoxCollision(bullhitbox, caughtbullhitbox) or BoxBoxCollision(bullhitbox2, caughtbullhitbox)) then
       combo = combo + 1
       combotimer = 0
       score = score + 100*combo
