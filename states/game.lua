@@ -166,7 +166,7 @@ function state:draw()
     love.graphics.setColor(255, 255, 255, v.alpha)
     love.graphics.draw(v.bull.dustParticles, 0, 0)
     love.graphics.draw(images.gore, v.bull.x, v.bull.y, v.bull.r, 1, 1, 25, 25)
-    love.graphics.printf(v.combo .. "X", v.bull.x-30, v.bull.y-10, 60, "center")
+    love.graphics.printf(v.combo .. "X", v.bull.x-30, v.bull.y-10-10*(255/v.alpha), 60, "center")
   end
   love.graphics.setColor(255, 255, 255, 255)
   for _, bull in ipairs(bulls) do
