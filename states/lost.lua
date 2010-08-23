@@ -19,7 +19,7 @@ function state:draw()
   love.graphics.setFont(largefont)
   love.graphics.printf("Splat!", 300, 300, 200, "center")
   love.graphics.setFont(font)
-  love.graphics.printf("Awww, you died. Good thing you can just restart then!", 275, 400, 250, "center")
+  love.graphics.printf("Awww, you died. Good thing you can just restart by pressing escape!", 275, 400, 250, "center")
   love.graphics.setColor(255, 255, 255)
 end
 
