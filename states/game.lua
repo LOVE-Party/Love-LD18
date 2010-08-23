@@ -24,7 +24,7 @@ function state:enter()
   bulls = {}
   spawnlist = {}
   gorelist = {}
-  timer = 7
+  timer = 9
   health = 3
   score = 0
   combo = 0
@@ -49,7 +49,7 @@ end
 function state:update(dt)
   soundmanager:update(dt)
   timer = timer + dt + combo*dt
-  if timer > 7 then
+  if timer > 9 then
     local gate = math.random(1, 4)
     local x, y = arena:center()
     if gate == 1 then y = arena:top()
