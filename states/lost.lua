@@ -27,8 +27,10 @@ function state:draw()
 end
 
 function state:keypressed(key, unicode)
-  if key == "escape" or key == "return" then
+  if key == "return" then
     love.audio.stop()
     Gamestate.switch(Gamestate.menu)
+  elseif key == "escape" then
+    love.event.push("q")
   end
 end

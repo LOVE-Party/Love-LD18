@@ -13,11 +13,25 @@ local guifont
 local score
 local combo
 local combotimer
+local blood
 
 local function caughtcb(caught)
   if caught then combotimer = 0
   else combo = 0
   end
+end
+
+local function createblood(x, y, amount, speedMin, speedMax)
+  local p = love.graphics.newParticleSystem(images.bloodparticle, 100)
+  p:setSpread(2*math.pi)
+  p:setSize(0.8, 1.5, 1)
+  p:setParticleLife(1)
+  p:setLifetime(0.2)
+  p:setPosition(x, y)
+  p:setSpeed(speedMin, speedMax)
+  p:setEmissionRate(amount)
+  p:start()
+  table.insert(blood, p)
 end
 
 function state:enter()
@@ -29,6 +43,7 @@ function state:enter()
   score = 0
   combo = 0
   combotimer = 0
+  blood = {}
   invuln = false
   love.graphics.setBackgroundColor(236,227,200)
   arena = _G.arena:new(0,0,1408,1408)
@@ -102,6 +117,16 @@ function state:update(dt)
       combo = 0
     end
   end
+  local removelist = {}
+  for i, v in ipairs(blood) do
+    v:update(dt)
+    if not v:isActive() and v:count() == 0 then
+      table.remove(removelist, i)
+    end
+  end
+  for i, v in ipairs(removelist) do
+    table.remove(blood, v-i+1)
+  end
   --collisions!
   local caughtbull = player.gripping
   if caughtbull then
@@ -124,6 +149,7 @@ function state:update(dt)
       v.dirY = math.sin(v.dir)
       v.r = v.r+math.pi
       invuln = 1
+      createblood(player.x, player.y, 75, 50, 120)
     elseif not v.caught and caughtbull and caughtbull ~= v and (quadsColliding(rotatebox(caughtbull:getheadbox()), rotatebox(v:getheadbox())) or quadsColliding(rotatebox(caughtbull:getheadbox()), rotatebox(v:getbodybox()))) then
       combo = combo + 1
       combotimer = 0
@@ -131,6 +157,7 @@ function state:update(dt)
       soundmanager:play(sounds.splat)
       table.insert(removelist, i)
       table.insert(gorelist, {bull = v, timer = 0, alpha = 255, combo = combo})
+      createblood(v.x, v.y, 100, 150, 300)
       v.dustParticles:stop()
     end
   end
@@ -162,6 +189,9 @@ function state:draw()
   if invuln then love.graphics.setColor(255, 255, 255, 255-(150*invuln)) end
   player:draw()
   if invuln then love.graphics.setColor(255, 255, 255, 255) end
+  for i, v in ipairs(blood) do
+    love.graphics.draw(v, 0, 0)
+  end
   love.graphics.pop()
   --draw hud
   minimap:draw()
