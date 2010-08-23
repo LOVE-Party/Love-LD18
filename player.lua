@@ -37,6 +37,7 @@ function player:init(x, y, a, b)
   love.graphics.setLineWidth(3)
   if not walkAnim then
     walkAnim = newAnimation(images.playerwalkanimation, 58, 64, 0.1, 16)
+    walkAnim:setMode("bounce")
     walkAnim:play()
   end
 end
