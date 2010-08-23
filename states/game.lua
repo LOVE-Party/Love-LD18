@@ -136,7 +136,7 @@ function state:update(dt)
       combo = combo + 1
       combotimer = 0
       score = score + 100*combo
-      soundmanager:play(sounds.moo)
+      soundmanager:play(sounds.splat)
       table.insert(removelist, i)
       table.insert(gorelist, {bull = v, timer = 0, alpha = 255})
     end
