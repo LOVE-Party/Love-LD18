@@ -98,7 +98,7 @@ function state:update(dt)
       table.insert(removelist, i)
     elseif not v.caught and caughtbull and BoxBoxCollision(bullhitbox, caughtbullhitbox) then
       table.insert(removelist, i)
-      table.insert(gorelist, {bull = v, timer = 0})
+      table.insert(gorelist, {bull = v, timer = 0, alpha = 255})
     end
   end
   for i, v in ipairs(removelist) do
