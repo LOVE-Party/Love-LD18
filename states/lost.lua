@@ -3,10 +3,12 @@ local state = Gamestate.lost
 
 local font
 local largefont
+local score
 
-function state:enter()
+function state:enter(last, sc)
   if not font then font = love.graphics.newFont("fonts/Chunkfive.otf", 14) end
   if not largefont then largefont = love.graphics.newFont("fonts/Chunkfive.otf", 48) end
+  score = sc
 end
 
 function state:update(dt)
@@ -20,6 +22,7 @@ function state:draw()
   love.graphics.printf("Splat!", 300, 300, 200, "center")
   love.graphics.setFont(font)
   love.graphics.printf("Awww, you died. Good thing you can just restart by pressing enter!", 275, 400, 250, "center")
+  love.graphics.printf("Score: " .. score, 100, 200, 600, "center")
   love.graphics.setColor(255, 255, 255)
 end
 

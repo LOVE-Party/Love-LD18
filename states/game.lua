@@ -145,7 +145,7 @@ function state:update(dt)
     table.remove(bulls, v-i+1)
   end
   if health <= 0 then
-    Gamestate.switch(Gamestate.lost)
+    Gamestate.switch(Gamestate.lost, score)
   end
 end
 
