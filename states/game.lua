@@ -9,6 +9,7 @@ local spawnlist
 local health
 local gorelist
 local invuln
+local guifont
 
 function state:enter()
   bulls = {}
@@ -22,6 +23,7 @@ function state:enter()
   player = _G.player:new(400, 300, arena, bulls)
   minimap = _G.minimap:new(player, arena, bulls, spawnlist)
   soundmanager:playMusic(music.vestapol)
+  if not guifont then guifont = love.graphics.newFont("fonts/Chunkfive.otf", 24) end
 end
 
 function state:mousepressed(x, y, button)
@@ -142,6 +144,11 @@ function state:draw()
   for i = 1, 3 do
     love.graphics.draw(health >= i and images.fullheart or images.emptyheart, 14*i, 14)
   end
+  love.graphics.draw(images.comboicon, 14, 85)
+  love.graphics.setColor(50,50,50)
+  love.graphics.setFont(guifont)
+  love.graphics.print("Score: 23451", 14, 72)
+  love.graphics.print("x 8", 55, 108)
 end
 
 function state:keypressed(key, unicode)
