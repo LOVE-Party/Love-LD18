@@ -1,4 +1,4 @@
 #!/bin/sh
 
-zip fistfulofbeef.love *.lua fonts/* gfx/* gfx/walltiles/* sfx/* states/* README
+zip fistfulofbeef.love *.lua fonts/* gfx/* gfx/walltiles/* lib/* music/* sfx/* states/* README
 
