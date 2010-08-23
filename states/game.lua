@@ -61,6 +61,14 @@ function state:update(dt)
   end
   --collisions!
   local playerhitbox = {player.x-25, player.y-13, 50, 30, player.r}
+  local caughtbull = player.gripping
+  local caughtbullhitbox = {0, 0, 75, 135, 0}
+  if caughtbull then
+    caughtbull = bulls[player.gripped]
+    caughtbullhitbox[1] = caughtbull.x-25
+    caughtbullhitbox[2] = caughtbull.y-25
+    caughtbullhitbox[5] = caughtbull.r
+  end
   local bullhitbox = {0, 0, 75, 135, 0}
   local removelist = {}
   for i, v in ipairs(bulls) do
@@ -74,6 +82,8 @@ function state:update(dt)
         bulls[player.gripped].caught = false
 	player.gripping = false
       end
+      table.insert(removelist, i)
+    elseif not v.caught and caughtbull and BoxBoxCollision(bullhitbox, caughtbullhitbox) then
       table.insert(removelist, i)
     end
   end
