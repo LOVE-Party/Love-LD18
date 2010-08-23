@@ -80,8 +80,15 @@ function player:update(dt)
   self.x = self.x + x*speed*dt
   self.y = self.y + y*speed*dt
 
+  --constrain to arena
+  self.x = math.max(self.x, self.arena:left()+25)
+  self.x = math.min(self.x, self.arena:right()-25)
+  self.y = math.max(self.y, self.arena:top()+25)
+  self.y = math.min(self.y, self.arena:bottom()-25)
+
   if self.gripping then
     local bull = bulls[self.gripped]
+    if not bull then self.gripping = false return end
     local angle = math.atan2(self.y-bull.y, self.x-bull.x)-0.5*math.pi
     self.r = angle
     local dist = (self.x - bull.x) * (self.x - bull.x) + (self.y - bull.y) * (self.y - bull.y)
@@ -91,12 +98,6 @@ function player:update(dt)
       bull.y = self.y + ropelength*math.sin(ropeangle);
     end
   end
-  
-  --constrain to arena
-  self.x = math.max(self.x, self.arena:left()+25)
-  self.x = math.min(self.x, self.arena:right()-25)
-  self.y = math.max(self.y, self.arena:top()+25)
-  self.y = math.min(self.y, self.arena:bottom()-25)
 end
 
 function player:center()
@@ -113,6 +114,7 @@ function player:draw()
     love.graphics.draw(images.lasso, self.x+x, self.y+y, self.lassor, 1, 1, 12, 12)
   elseif self.gripping then
     local bull = bulls[self.gripped]
+    if not bull then self.gripping = false return end
     local x, y = math.cos(self.r-0.5*math.pi)*23, math.sin(self.r-0.5*math.pi)*23
     love.graphics.setColor(104, 89, 67)
     love.graphics.line(self.x+x, self.y+y, bull.x, bull.y)

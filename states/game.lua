@@ -64,8 +64,8 @@ function state:update(dt)
   removelist = {}
   for i, v in ipairs(gorelist) do
     v.timer = v.timer + dt
-    v.alpha = 255*(2-v.timer)/2
-    if v.timer > 2 then
+    v.alpha = 255*(5-v.timer)/5
+    if v.timer > 5 then
        table.insert(removelist, i)
     end
   end
